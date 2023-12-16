@@ -1,9 +1,11 @@
 using DynamicMatrix_DLL;
-using Microsoft.EntityFrameworkCore;
+using DynamicMatrix_WF.Models;
 using Microsoft.Office.Interop.Word;
 using System.Data;
+using Syroot.Windows.IO;
 using DataTable = System.Data.DataTable;
 using Point = System.Drawing.Point;
+using System.Windows.Forms;
 namespace DynamicMatrix_WF
 {
     public partial class FormMain : Form
@@ -83,6 +85,7 @@ namespace DynamicMatrix_WF
         }
         private void RedrawMatrixOne(string[][]? valueMatrix = null)
         {
+            MatrixOneDataDridView.CellValueChanged -= MatrixOneDataDridView_CellValueChanged!;
             if (valueMatrix is not null)
             {
                 numericUpDown1.Value = valueMatrix.GetLength(0);
@@ -107,13 +110,14 @@ namespace DynamicMatrix_WF
             foreach (DataGridViewColumn column in MatrixOneDataDridView.Columns)
 
             {
+
                 column.Width = 30;
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
                 column.ReadOnly = false;
             }
             foreach (DataGridViewRow row in MatrixOneDataDridView.Rows)
-
                 row.HeaderCell.Value = (row.Index + 1).ToString();
+                
             if (valueMatrix is not null)
             {
                 foreach ((string[] row, int indexOut) in valueMatrix.Select((row, indexOut) => (row, indexOut)))
@@ -124,10 +128,14 @@ namespace DynamicMatrix_WF
                     }
                 }
             }
+            if (valueMatrix is not null)
+                MatrixOneDataDridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             MatrixOneDataDridView.Refresh();
+            MatrixOneDataDridView.CellValueChanged += MatrixOneDataDridView_CellValueChanged!;
         }
         private void RedrawMatrixTwo()
         {
+
             DataTable table = new DataTable();
 
             for (int i = 0; i < numericUpDown4.Value; i++)
@@ -156,6 +164,7 @@ namespace DynamicMatrix_WF
                 row.HeaderCell.Value = (row.Index + 1).ToString();
 
             MatrixTwoDataDridView.Refresh();
+
         }
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
@@ -237,6 +246,7 @@ namespace DynamicMatrix_WF
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "Текстовые файлы (*.txt)|*.txt";
+            saveFileDialog1.InitialDirectory = KnownFolders.Downloads.Path;
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
@@ -258,6 +268,7 @@ namespace DynamicMatrix_WF
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "Word Документы (*.docx)|*.docx";
+            saveFileDialog1.InitialDirectory = KnownFolders.Downloads.Path;
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
@@ -295,7 +306,7 @@ namespace DynamicMatrix_WF
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt";
             openFileDialog.Multiselect = false;
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            openFileDialog.InitialDirectory = KnownFolders.Downloads.Path;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 int linesToSkip = 2;
@@ -325,15 +336,56 @@ namespace DynamicMatrix_WF
             }
         }
 
-        private void ActionButton_Click(object sender, EventArgs e)
+        private async void ActionButton_Click(object sender, EventArgs e)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             using (var dbContext = new AppDbContext())
             {
                 Models.Action action = new Models.Action() { ActionType = ActionEnum.SumMatrices, Result = "13", };
-                dbContext.Actions.Add(action);
-                dbContext.SaveChanges();
+                await dbContext.Actions.AddAsync(action);
+
+                foreach (DataGridViewRow row in MatrixOneDataDridView.Rows)
+                {
+                    foreach (DataGridViewCell cell in row.Cells)
+                    {
+                        {
+                            Value entity = new Value() { Number = cell?.Value?.ToString()!, Action = action };
+
+                            await dbContext.Values.AddAsync(entity);
+                        }
+                    }
+
+                }
+
+                await dbContext.SaveChangesAsync();
             }
+            ResultForm resultForm = new ResultForm("Результат!");
+            resultForm.Show();
+        }
+
+        private void MatrixOneDataDridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+
+            string valueCell = MatrixOneDataDridView.CurrentCell.Value.ToString()!;
+            if (valueCell.Contains("."))
+                valueCell = valueCell.Replace(".", ",");
+            MatrixOneDataDridView.CellValueChanged -= MatrixOneDataDridView_CellValueChanged!;
+
+            bool validateValueTypeInt = Int32.TryParse(valueCell, out int valueIntCell);
+            bool validateValueTypeFloat = Single.TryParse(valueCell, out float valueFloatCell);
+
+
+            if (validateValueTypeFloat)
+                MatrixOneDataDridView.CurrentCell.Value = valueFloatCell;
+            else if (validateValueTypeInt)
+                MatrixOneDataDridView.CurrentCell.Value = valueIntCell;
+            else
+            {
+                MatrixOneDataDridView.CurrentCell.Value = 0;
+                MessageBox.Show("Недопустимое значение.");
+            }
+
+            MatrixOneDataDridView.CellValueChanged += MatrixOneDataDridView_CellValueChanged!;
+
         }
     }
 }
