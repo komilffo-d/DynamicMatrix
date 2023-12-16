@@ -47,8 +47,10 @@
             menuStrip1 = new MenuStrip();
             экспортToolStripMenuItem = new ToolStripMenuItem();
             fileTXTToolStripMenuItem = new ToolStripMenuItem();
-            wordФайлToolStripMenuItem = new ToolStripMenuItem();
-            saveFileDialog1 = new SaveFileDialog();
+            fileWordToolStripMenuItem = new ToolStripMenuItem();
+            импортToolStripMenuItem = new ToolStripMenuItem();
+            fileTXTImportoolStripMenuItem = new ToolStripMenuItem();
+            ActionButton = new Button();
             ((System.ComponentModel.ISupportInitialize)MatrixOneDataDridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
@@ -63,6 +65,8 @@
             // 
             // MatrixOneDataDridView
             // 
+            MatrixOneDataDridView.AllowUserToAddRows = false;
+            MatrixOneDataDridView.AllowUserToDeleteRows = false;
             MatrixOneDataDridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             MatrixOneDataDridView.Location = new Point(10, 130);
             MatrixOneDataDridView.Name = "MatrixOneDataDridView";
@@ -106,6 +110,8 @@
             // 
             // MatrixTwoDataDridView
             // 
+            MatrixTwoDataDridView.AllowUserToAddRows = false;
+            MatrixTwoDataDridView.AllowUserToDeleteRows = false;
             MatrixTwoDataDridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             MatrixTwoDataDridView.Location = new Point(253, 130);
             MatrixTwoDataDridView.Name = "MatrixTwoDataDridView";
@@ -224,7 +230,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { экспортToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { экспортToolStripMenuItem, импортToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(744, 24);
@@ -233,7 +239,7 @@
             // 
             // экспортToolStripMenuItem
             // 
-            экспортToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fileTXTToolStripMenuItem, wordФайлToolStripMenuItem });
+            экспортToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fileTXTToolStripMenuItem, fileWordToolStripMenuItem });
             экспортToolStripMenuItem.Name = "экспортToolStripMenuItem";
             экспортToolStripMenuItem.Size = new Size(64, 20);
             экспортToolStripMenuItem.Text = "Экспорт";
@@ -241,21 +247,47 @@
             // fileTXTToolStripMenuItem
             // 
             fileTXTToolStripMenuItem.Name = "fileTXTToolStripMenuItem";
-            fileTXTToolStripMenuItem.Size = new Size(180, 22);
+            fileTXTToolStripMenuItem.Size = new Size(135, 22);
             fileTXTToolStripMenuItem.Text = "TXT Файл";
             fileTXTToolStripMenuItem.Click += fileTXTToolStripMenuItem_Click;
             // 
-            // wordФайлToolStripMenuItem
+            // fileWordToolStripMenuItem
             // 
-            wordФайлToolStripMenuItem.Name = "wordФайлToolStripMenuItem";
-            wordФайлToolStripMenuItem.Size = new Size(180, 22);
-            wordФайлToolStripMenuItem.Text = "Word Файл";
+            fileWordToolStripMenuItem.Name = "fileWordToolStripMenuItem";
+            fileWordToolStripMenuItem.Size = new Size(135, 22);
+            fileWordToolStripMenuItem.Text = "Word Файл";
+            fileWordToolStripMenuItem.Click += fileWordToolStripMenuItem_Click;
+            // 
+            // импортToolStripMenuItem
+            // 
+            импортToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fileTXTImportoolStripMenuItem });
+            импортToolStripMenuItem.Name = "импортToolStripMenuItem";
+            импортToolStripMenuItem.Size = new Size(63, 20);
+            импортToolStripMenuItem.Text = "Импорт";
+            // 
+            // fileTXTImportoolStripMenuItem
+            // 
+            fileTXTImportoolStripMenuItem.Name = "fileTXTImportoolStripMenuItem";
+            fileTXTImportoolStripMenuItem.Size = new Size(125, 22);
+            fileTXTImportoolStripMenuItem.Text = "TXT Файл";
+            fileTXTImportoolStripMenuItem.Click += fileTXTImportoolStripMenuItem_Click;
+            // 
+            // ActionButton
+            // 
+            ActionButton.Location = new Point(335, 438);
+            ActionButton.Name = "ActionButton";
+            ActionButton.Size = new Size(377, 23);
+            ActionButton.TabIndex = 12;
+            ActionButton.Text = "Совершить действие";
+            ActionButton.UseVisualStyleBackColor = true;
+            ActionButton.Click += ActionButton_Click;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(744, 573);
+            Controls.Add(ActionButton);
             Controls.Add(comboBox1);
             Controls.Add(matrixTwoGroupBox);
             Controls.Add(groupBox2);
@@ -306,7 +338,9 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem экспортToolStripMenuItem;
         private ToolStripMenuItem fileTXTToolStripMenuItem;
-        private ToolStripMenuItem wordФайлToolStripMenuItem;
-        private SaveFileDialog saveFileDialog1;
+        private ToolStripMenuItem fileWordToolStripMenuItem;
+        private ToolStripMenuItem импортToolStripMenuItem;
+        private ToolStripMenuItem fileTXTImportoolStripMenuItem;
+        private Button ActionButton;
     }
 }

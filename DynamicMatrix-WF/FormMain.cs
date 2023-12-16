@@ -1,7 +1,9 @@
 using DynamicMatrix_DLL;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Office.Interop.Word;
 using System.Data;
-using System.Windows.Forms;
-
+using DataTable = System.Data.DataTable;
+using Point = System.Drawing.Point;
 namespace DynamicMatrix_WF
 {
     public partial class FormMain : Form
@@ -79,8 +81,13 @@ namespace DynamicMatrix_WF
             comboBox1.Refresh();
 
         }
-        private void RedrawMatrixOne()
+        private void RedrawMatrixOne(string[][]? valueMatrix = null)
         {
+            if (valueMatrix is not null)
+            {
+                numericUpDown1.Value = valueMatrix.GetLength(0);
+                numericUpDown2.Value = valueMatrix.Select(subArr => subArr.Count()).Sum() / valueMatrix.GetLength(0);
+            }
             DataTable table = new DataTable();
 
             for (int i = 0; i < numericUpDown2.Value; i++)
@@ -107,7 +114,16 @@ namespace DynamicMatrix_WF
             foreach (DataGridViewRow row in MatrixOneDataDridView.Rows)
 
                 row.HeaderCell.Value = (row.Index + 1).ToString();
-
+            if (valueMatrix is not null)
+            {
+                foreach ((string[] row, int indexOut) in valueMatrix.Select((row, indexOut) => (row, indexOut)))
+                {
+                    foreach ((string cell, int indexIn) in row.Select((cell, indexIn) => (cell, indexIn)))
+                    {
+                        MatrixOneDataDridView.Rows[indexOut].Cells[indexIn].Value = cell;
+                    }
+                }
+            }
             MatrixOneDataDridView.Refresh();
         }
         private void RedrawMatrixTwo()
@@ -219,8 +235,8 @@ namespace DynamicMatrix_WF
 
         private void fileTXTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Текстовые файлы (*.txt)|*.txt";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
@@ -235,6 +251,88 @@ namespace DynamicMatrix_WF
                         sw.WriteLine("");
                     }
                 }
+            }
+        }
+
+        private void fileWordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Word Документы (*.docx)|*.docx";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
+
+                Document doc = wordApp.Documents.Add();
+
+                Table table = doc.Tables.Add(doc.Range(), MatrixOneDataDridView.Rows.Count + 1, MatrixOneDataDridView.ColumnCount);
+
+                for (int i = 0; i < MatrixOneDataDridView.Columns.Count; i++)
+                {
+                    table.Cell(1, i + 1).Range.Text = MatrixOneDataDridView.Columns[i].HeaderText;
+                }
+
+                for (int i = 0; i < MatrixOneDataDridView.Rows.Count; i++)
+                {
+                    for (int j = 0; j < MatrixOneDataDridView.Columns.Count; j++)
+                    {
+                        table.Cell(i + 2, j + 1).Range.Text = MatrixOneDataDridView.Rows[i].Cells[j].Value.ToString();
+                    }
+                }
+
+                object fileName = saveFileDialog1.FileName;
+                doc.SaveAs2(ref fileName);
+
+                doc.Close();
+                wordApp.Quit();
+
+                MessageBox.Show("Данные успешно выведены в файл Word.", "Экспорт в Word", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+        }
+
+        private void fileTXTImportoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt";
+            openFileDialog.Multiselect = false;
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                int linesToSkip = 2;
+                MatrixOneDataDridView.DataSource = null;
+                MatrixOneDataDridView.Rows.Clear();
+
+                List<string> lines = new List<string>();
+                using (StreamReader sr = new StreamReader(openFileDialog.FileName))
+                {
+                    for (int i = 0; i < linesToSkip; i++)
+                        sr.ReadLine();
+
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        lines.Add(line);
+                    }
+                }
+
+                string[][] matrixValue = new string[lines.Count][];
+                foreach ((string line, int index) in lines.Select((string line, int index) => (line, index)))
+                {
+
+                    matrixValue[index] = line.Trim('\t').Split('\t');
+                }
+                RedrawMatrixOne(matrixValue);
+            }
+        }
+
+        private void ActionButton_Click(object sender, EventArgs e)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            using (var dbContext = new AppDbContext())
+            {
+                Models.Action action = new Models.Action() { ActionType = ActionEnum.SumMatrices, Result = "13", };
+                dbContext.Actions.Add(action);
+                dbContext.SaveChanges();
             }
         }
     }
