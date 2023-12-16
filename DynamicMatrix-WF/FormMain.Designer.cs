@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             MatrixOneDataDridView = new DataGridView();
             numericUpDown1 = new NumericUpDown();
             numericUpDown2 = new NumericUpDown();
@@ -47,12 +47,11 @@
             label4 = new Label();
             comboBox1 = new ComboBox();
             menuStrip1 = new MenuStrip();
-            экспортToolStripMenuItem = new ToolStripMenuItem();
-            fileTXTToolStripMenuItem = new ToolStripMenuItem();
-            fileWordToolStripMenuItem = new ToolStripMenuItem();
             импортToolStripMenuItem = new ToolStripMenuItem();
             fileTXTImportoolStripMenuItem = new ToolStripMenuItem();
             ActionButton = new Button();
+            экспортToolStripMenuItem = new ToolStripMenuItem();
+            fileTXTToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)MatrixOneDataDridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
@@ -69,25 +68,25 @@
             // 
             MatrixOneDataDridView.AllowUserToAddRows = false;
             MatrixOneDataDridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            MatrixOneDataDridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            MatrixOneDataDridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             MatrixOneDataDridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             MatrixOneDataDridView.Location = new Point(10, 130);
             MatrixOneDataDridView.Name = "MatrixOneDataDridView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            MatrixOneDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            MatrixOneDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             MatrixOneDataDridView.RowTemplate.Height = 25;
             MatrixOneDataDridView.Size = new Size(480, 270);
             MatrixOneDataDridView.TabIndex = 0;
@@ -131,6 +130,8 @@
             // 
             MatrixTwoDataDridView.AllowUserToAddRows = false;
             MatrixTwoDataDridView.AllowUserToDeleteRows = false;
+            MatrixTwoDataDridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            MatrixTwoDataDridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             MatrixTwoDataDridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             MatrixTwoDataDridView.Location = new Point(253, 130);
             MatrixTwoDataDridView.Name = "MatrixTwoDataDridView";
@@ -238,6 +239,7 @@
             // comboBox1
             // 
             comboBox1.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
             comboBox1.Items.AddRange(new object[] { "Суммирование матриц", "Вычитание матриц", "Перемножение матриц", "Умножение матрицы на число", "Деление матриц", "Нахождение определителя", "Транспонирование матрицы", "Нахождение обратной матрицы" });
             comboBox1.Location = new Point(20, 435);
@@ -256,27 +258,6 @@
             menuStrip1.TabIndex = 11;
             menuStrip1.Text = "menuStrip1";
             // 
-            // экспортToolStripMenuItem
-            // 
-            экспортToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fileTXTToolStripMenuItem, fileWordToolStripMenuItem });
-            экспортToolStripMenuItem.Name = "экспортToolStripMenuItem";
-            экспортToolStripMenuItem.Size = new Size(64, 20);
-            экспортToolStripMenuItem.Text = "Экспорт";
-            // 
-            // fileTXTToolStripMenuItem
-            // 
-            fileTXTToolStripMenuItem.Name = "fileTXTToolStripMenuItem";
-            fileTXTToolStripMenuItem.Size = new Size(135, 22);
-            fileTXTToolStripMenuItem.Text = "TXT Файл";
-            fileTXTToolStripMenuItem.Click += fileTXTToolStripMenuItem_Click;
-            // 
-            // fileWordToolStripMenuItem
-            // 
-            fileWordToolStripMenuItem.Name = "fileWordToolStripMenuItem";
-            fileWordToolStripMenuItem.Size = new Size(135, 22);
-            fileWordToolStripMenuItem.Text = "Word Файл";
-            fileWordToolStripMenuItem.Click += fileWordToolStripMenuItem_Click;
-            // 
             // импортToolStripMenuItem
             // 
             импортToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fileTXTImportoolStripMenuItem });
@@ -287,7 +268,7 @@
             // fileTXTImportoolStripMenuItem
             // 
             fileTXTImportoolStripMenuItem.Name = "fileTXTImportoolStripMenuItem";
-            fileTXTImportoolStripMenuItem.Size = new Size(125, 22);
+            fileTXTImportoolStripMenuItem.Size = new Size(180, 22);
             fileTXTImportoolStripMenuItem.Text = "TXT Файл";
             fileTXTImportoolStripMenuItem.Click += fileTXTImportoolStripMenuItem_Click;
             // 
@@ -300,6 +281,20 @@
             ActionButton.Text = "Совершить действие";
             ActionButton.UseVisualStyleBackColor = true;
             ActionButton.Click += ActionButton_Click;
+            // 
+            // экспортToolStripMenuItem
+            // 
+            экспортToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fileTXTToolStripMenuItem });
+            экспортToolStripMenuItem.Name = "экспортToolStripMenuItem";
+            экспортToolStripMenuItem.Size = new Size(64, 20);
+            экспортToolStripMenuItem.Text = "Экспорт";
+            // 
+            // fileTXTToolStripMenuItem
+            // 
+            fileTXTToolStripMenuItem.Name = "fileTXTToolStripMenuItem";
+            fileTXTToolStripMenuItem.Size = new Size(180, 22);
+            fileTXTToolStripMenuItem.Text = "TXT Файл";
+            fileTXTToolStripMenuItem.Click += fileTXTToolStripMenuItem_Click;
             // 
             // FormMain
             // 
@@ -316,8 +311,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "FormMain";
-            Text = "Form1";
-            Load += FormMain_Load;
+            Text = "Взаимодействие с матрицами";
             ((System.ComponentModel.ISupportInitialize)MatrixOneDataDridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
@@ -355,11 +349,10 @@
         private Label label4;
         private ComboBox comboBox1;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem экспортToolStripMenuItem;
-        private ToolStripMenuItem fileTXTToolStripMenuItem;
-        private ToolStripMenuItem fileWordToolStripMenuItem;
         private ToolStripMenuItem импортToolStripMenuItem;
         private ToolStripMenuItem fileTXTImportoolStripMenuItem;
         private Button ActionButton;
+        private ToolStripMenuItem экспортToolStripMenuItem;
+        private ToolStripMenuItem fileTXTToolStripMenuItem;
     }
 }

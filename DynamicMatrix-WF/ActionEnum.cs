@@ -1,6 +1,6 @@
 ﻿namespace DynamicMatrix_WF
 {
-    public enum ActionEnum : sbyte
+    public enum ActionEnum
     {
         SumMatrices = 1,
         SubtractMatrices,

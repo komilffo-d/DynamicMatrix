@@ -1,11 +1,10 @@
 using DynamicMatrix_DLL;
 using DynamicMatrix_WF.Models;
-using Microsoft.Office.Interop.Word;
-using System.Data;
+using Newtonsoft.Json;
 using Syroot.Windows.IO;
+using System.Data;
 using DataTable = System.Data.DataTable;
 using Point = System.Drawing.Point;
-using System.Windows.Forms;
 namespace DynamicMatrix_WF
 {
     public partial class FormMain : Form
@@ -27,22 +26,8 @@ namespace DynamicMatrix_WF
             int[,] arrayIn = new int[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
             var ptr = DynamicMatrix.ConvertToFloatMatrix(in arrayIn, new nint((uint)rows), new nint((uint)cols));
             RedrawComboBox(false);
-
-
-
-
-
-
-
         }
 
-
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-            radioButton1.Checked = true;
-
-
-        }
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
 
@@ -57,27 +42,27 @@ namespace DynamicMatrix_WF
             if (pairOperation)
             {
                 comboBox1.Items.AddRange(new[] {
-                    new ComboBoxItem() { Selectable = true, Text="Суммирование матриц", Value=0},
-                    new ComboBoxItem() { Selectable = true, Text="Вычитание матриц", Value=1},
-                    new ComboBoxItem() { Selectable = true, Text="Перемножение матриц", Value=2},
-                    new ComboBoxItem() { Selectable = false, Text="Умножение матрицы на число", Value=3},
-                    new ComboBoxItem() { Selectable = true, Text="Деление матриц", Value=4},
-                    new ComboBoxItem() { Selectable = false, Text="Нахождение определителя", Value=5},
-                    new ComboBoxItem() { Selectable = false, Text="Транспонирование матрицы", Value=6},
-                    new ComboBoxItem() { Selectable = false, Text="Нахождение обратной матрицы", Value=7},
+                    new ComboBoxItem() { Selectable = true, Text="Суммирование матриц", Value=1},
+                    new ComboBoxItem() { Selectable = true, Text="Вычитание матриц", Value=2},
+                    new ComboBoxItem() { Selectable = true, Text="Перемножение матриц", Value=3},
+                    new ComboBoxItem() { Selectable = false, Text="Умножение матрицы на число", Value=4},
+                    new ComboBoxItem() { Selectable = true, Text="Деление матриц", Value=5},
+                    new ComboBoxItem() { Selectable = false, Text="Нахождение определителя", Value=6},
+                    new ComboBoxItem() { Selectable = false, Text="Транспонирование матрицы", Value=7},
+                    new ComboBoxItem() { Selectable = false, Text="Нахождение обратной матрицы", Value=8},
             });
             }
             else
             {
                 comboBox1.Items.AddRange(new[] {
-                    new ComboBoxItem() { Selectable = false, Text="Суммирование матриц", Value=0},
-                    new ComboBoxItem() { Selectable = false, Text="Вычитание матриц", Value=1},
-                    new ComboBoxItem() { Selectable = false, Text="Перемножение матриц", Value=2},
-                    new ComboBoxItem() { Selectable = true, Text="Умножение матрицы на число", Value=3},
-                    new ComboBoxItem() { Selectable = false, Text="Деление матриц", Value=4},
-                    new ComboBoxItem() { Selectable = true, Text="Нахождение определителя", Value=5},
-                    new ComboBoxItem() { Selectable = true, Text="Транспонирование матрицы", Value=6},
-                    new ComboBoxItem() { Selectable = true, Text="Нахождение обратной матрицы", Value=7},
+                    new ComboBoxItem() { Selectable = false, Text="Суммирование матриц", Value=1},
+                    new ComboBoxItem() { Selectable = false, Text="Вычитание матриц", Value=2},
+                    new ComboBoxItem() { Selectable = false, Text="Перемножение матриц", Value=3},
+                    new ComboBoxItem() { Selectable = true, Text="Умножение матрицы на число", Value=4},
+                    new ComboBoxItem() { Selectable = false, Text="Деление матриц", Value=5},
+                    new ComboBoxItem() { Selectable = true, Text="Нахождение определителя", Value=6},
+                    new ComboBoxItem() { Selectable = true, Text="Транспонирование матрицы", Value=7},
+                    new ComboBoxItem() { Selectable = true, Text="Нахождение обратной матрицы", Value=8},
             });
             }
             comboBox1.Refresh();
@@ -117,7 +102,7 @@ namespace DynamicMatrix_WF
             }
             foreach (DataGridViewRow row in MatrixOneDataDridView.Rows)
                 row.HeaderCell.Value = (row.Index + 1).ToString();
-                
+
             if (valueMatrix is not null)
             {
                 foreach ((string[] row, int indexOut) in valueMatrix.Select((row, indexOut) => (row, indexOut)))
@@ -128,14 +113,17 @@ namespace DynamicMatrix_WF
                     }
                 }
             }
-            if (valueMatrix is not null)
-                MatrixOneDataDridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             MatrixOneDataDridView.Refresh();
             MatrixOneDataDridView.CellValueChanged += MatrixOneDataDridView_CellValueChanged!;
         }
-        private void RedrawMatrixTwo()
+        private void RedrawMatrixTwo(string[][]? valueMatrix = null)
         {
 
+            if (valueMatrix is not null)
+            {
+                numericUpDown3.Value = valueMatrix.GetLength(0);
+                numericUpDown4.Value = valueMatrix.Select(subArr => subArr.Count()).Sum() / valueMatrix.GetLength(0);
+            }
             DataTable table = new DataTable();
 
             for (int i = 0; i < numericUpDown4.Value; i++)
@@ -162,9 +150,132 @@ namespace DynamicMatrix_WF
             foreach (DataGridViewRow row in MatrixTwoDataDridView.Rows)
 
                 row.HeaderCell.Value = (row.Index + 1).ToString();
-
+            if (valueMatrix is not null)
+            {
+                foreach ((string[] row, int indexOut) in valueMatrix.Select((row, indexOut) => (row, indexOut)))
+                {
+                    foreach ((string cell, int indexIn) in row.Select((cell, indexIn) => (cell, indexIn)))
+                    {
+                        MatrixTwoDataDridView.Rows[indexOut].Cells[indexIn].Value = cell;
+                    }
+                }
+            }
             MatrixTwoDataDridView.Refresh();
 
+        }
+        private string[,] GetMatrixOne()
+        {
+            int rowsCount = MatrixOneDataDridView.RowCount;
+            int colsCount = MatrixOneDataDridView.ColumnCount;
+            string[,] values = new string[rowsCount, colsCount];
+
+            for (int i = 0; i < rowsCount; i++)
+            {
+                for (int j = 0; j < colsCount; j++)
+                {
+                    values[i, j] = MatrixOneDataDridView.Rows[i].Cells[j].Value.ToString()!;
+                }
+            }
+            return values;
+        }
+        private string[,] GetMatrixTwo()
+        {
+            int rowsCount = MatrixTwoDataDridView.RowCount;
+            int colsCount = MatrixTwoDataDridView.ColumnCount;
+            string[,] values = new string[rowsCount, colsCount];
+
+            for (int i = 0; i < rowsCount; i++)
+            {
+                for (int j = 0; j < colsCount; j++)
+                {
+                    values[i, j] = MatrixTwoDataDridView.Rows[i].Cells[j].Value.ToString()!;
+                }
+            }
+            return values;
+        }
+        private int[,] ConvertMatrixToInt(string[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int columns = matrix.GetLength(1);
+
+            int[,] intArray = new int[rows, columns];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    intArray[i, j] = int.Parse(matrix[i, j]);
+                }
+            }
+
+            return intArray;
+        }
+        private float[,] ConvertMatrixToFloat(string[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int columns = matrix.GetLength(1);
+
+            float[,] floatArray = new float[rows, columns];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    floatArray[i, j] = float.Parse(matrix[i, j]);
+                }
+            }
+
+            return floatArray;
+        }
+        private string[,] ConvertMatrixToString<T>(T[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int columns = matrix.GetLength(1);
+
+            string[,] stringArray = new string[rows, columns];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    stringArray[i, j] = matrix[i, j].ToString()!;
+                }
+            }
+
+            return stringArray;
+        }
+        private bool checkMatrixFloat(string[,] matrix)
+        {
+            int rowsCount = matrix.GetLength(0);
+            int colsCount = matrix.GetLength(1);
+
+            bool isFloat = default;
+            for (int i = 0; i < rowsCount; i++)
+            {
+                if (isFloat)
+                    break;
+                for (int j = 0; j < colsCount; j++)
+                {
+                    string cellValue = matrix[i, j];
+                    float result;
+                    isFloat = float.TryParse(cellValue, out result) && (cellValue.Contains(".") || cellValue.Contains(","));
+
+                    if (isFloat)
+                        break;
+                }
+            }
+            return isFloat;
+        }
+
+        private bool checkMatricesEqualityLength(string[,] matrixOne, string[,] matrixTwo)
+        {
+            int rows1 = matrixOne.GetLength(0);
+            int columns1 = matrixOne.GetLength(1);
+
+            int rows2 = matrixTwo.GetLength(0);
+            int columns2 = matrixTwo.GetLength(1);
+
+            return (rows1 == rows2) && (columns1 == columns2);
         }
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
@@ -251,7 +362,7 @@ namespace DynamicMatrix_WF
             {
                 using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
                 {
-                    sw.WriteLine("Матрица #1\n");
+                    sw.WriteLine("/*** Матрица #1 ***/\n");
                     foreach (DataGridViewRow row in MatrixOneDataDridView.Rows)
                     {
                         foreach (DataGridViewCell cell in row.Cells)
@@ -260,47 +371,22 @@ namespace DynamicMatrix_WF
                         }
                         sw.WriteLine("");
                     }
-                }
-            }
-        }
-
-        private void fileWordToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "Word Документы (*.docx)|*.docx";
-            saveFileDialog1.InitialDirectory = KnownFolders.Downloads.Path;
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
-
-                Document doc = wordApp.Documents.Add();
-
-                Table table = doc.Tables.Add(doc.Range(), MatrixOneDataDridView.Rows.Count + 1, MatrixOneDataDridView.ColumnCount);
-
-                for (int i = 0; i < MatrixOneDataDridView.Columns.Count; i++)
-                {
-                    table.Cell(1, i + 1).Range.Text = MatrixOneDataDridView.Columns[i].HeaderText;
-                }
-
-                for (int i = 0; i < MatrixOneDataDridView.Rows.Count; i++)
-                {
-                    for (int j = 0; j < MatrixOneDataDridView.Columns.Count; j++)
+                    if (radioButton2.Checked)
                     {
-                        table.Cell(i + 2, j + 1).Range.Text = MatrixOneDataDridView.Rows[i].Cells[j].Value.ToString();
+                        sw.WriteLine("\n/*** Матрица #2 ***/\n");
+                        foreach (DataGridViewRow row in MatrixTwoDataDridView.Rows)
+                        {
+                            foreach (DataGridViewCell cell in row.Cells)
+                            {
+                                sw.Write(cell.Value + "\t");
+                            }
+                            sw.WriteLine("");
+                        }
                     }
+
                 }
-
-                object fileName = saveFileDialog1.FileName;
-                doc.SaveAs2(ref fileName);
-
-                doc.Close();
-                wordApp.Quit();
-
-                MessageBox.Show("Данные успешно выведены в файл Word.", "Экспорт в Word", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
         }
-
         private void fileTXTImportoolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -313,7 +399,8 @@ namespace DynamicMatrix_WF
                 MatrixOneDataDridView.DataSource = null;
                 MatrixOneDataDridView.Rows.Clear();
 
-                List<string> lines = new List<string>();
+                List<string> linesOne = new List<string>();
+                List<string> linesTwo = new List<string>();
                 using (StreamReader sr = new StreamReader(openFileDialog.FileName))
                 {
                     for (int i = 0; i < linesToSkip; i++)
@@ -322,17 +409,31 @@ namespace DynamicMatrix_WF
                     string line;
                     while ((line = sr.ReadLine()) != null)
                     {
-                        lines.Add(line);
+                        if (line.Length != 0)
+                            linesOne.Add(line);
+                        else
+                            break;
+
+                    }
+                    for (int i = 0; i < linesToSkip; i++)
+                        sr.ReadLine();
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        if (line.Length != 0)
+                            linesTwo.Add(line);
+                        else
+                            break;
                     }
                 }
 
-                string[][] matrixValue = new string[lines.Count][];
-                foreach ((string line, int index) in lines.Select((string line, int index) => (line, index)))
-                {
-
-                    matrixValue[index] = line.Trim('\t').Split('\t');
-                }
-                RedrawMatrixOne(matrixValue);
+                string[][] matrixOneValue = new string[linesOne.Count][], matrixTwoValue = new string[linesTwo.Count][];
+                foreach ((string line, int index) in linesOne.Select((string line, int index) => (line, index)))
+                    matrixOneValue[index] = line.Trim('\t').Split('\t');
+                foreach ((string line, int index) in linesTwo.Select((string line, int index) => (line, index)))
+                    matrixTwoValue[index] = line.Trim('\t').Split('\t');
+                RedrawMatrixOne(matrixOneValue);
+                if (matrixTwoValue.Length > 0 && radioButton2.Checked)
+                    RedrawMatrixTwo(matrixTwoValue);
             }
         }
 
@@ -340,26 +441,79 @@ namespace DynamicMatrix_WF
         {
             using (var dbContext = new AppDbContext())
             {
-                Models.Action action = new Models.Action() { ActionType = ActionEnum.SumMatrices, Result = "13", };
-                await dbContext.Actions.AddAsync(action);
+                string[,] matrixOne = GetMatrixOne();
+                string[,] matrixTwo = GetMatrixTwo();
 
-                foreach (DataGridViewRow row in MatrixOneDataDridView.Rows)
+                int[,] resultIntMatrix = default!;
+                float[,] resultFloatMatrix = default!;
+
+
+                if (Enum.IsDefined(typeof(ActionEnum), ((ComboBoxItem)comboBox1.SelectedItem).Value))
                 {
-                    foreach (DataGridViewCell cell in row.Cells)
+                    switch ((ActionEnum)((ComboBoxItem)comboBox1.SelectedItem).Value)
                     {
-                        {
-                            Value entity = new Value() { Number = cell?.Value?.ToString()!, Action = action };
-
-                            await dbContext.Values.AddAsync(entity);
-                        }
+                        case ActionEnum.SumMatrices when checkMatrixFloat(matrixOne) || checkMatrixFloat(matrixTwo):
+                            if (checkMatricesEqualityLength(matrixOne, matrixTwo))
+                                resultFloatMatrix = DynamicMatrix.AddMatrixFloat(ConvertMatrixToFloat(matrixOne), ConvertMatrixToFloat(matrixTwo), (nint)(matrixOne.GetLength(0) + matrixTwo.GetLength(0)) / 2, (nint)(matrixOne.GetLength(1) + matrixTwo.GetLength(1)) / 2);
+                            else
+                                MessageBox.Show("Матрицы не совпадают по размеру.");
+                            break;
+                        case ActionEnum.SumMatrices:
+                            if (checkMatricesEqualityLength(matrixOne, matrixTwo))
+                                resultIntMatrix = DynamicMatrix.AddMatrixInt(ConvertMatrixToInt(matrixOne), ConvertMatrixToInt(matrixTwo), (nint)(matrixOne.GetLength(0) + matrixTwo.GetLength(0)) / 2, (nint)(matrixOne.GetLength(1) + matrixTwo.GetLength(1)) / 2);
+                            else
+                                MessageBox.Show("Матрицы не совпадают по размеру.");
+                            break;
+                        default:
+                            break;
                     }
+                }
+                if (resultIntMatrix is not null)
+                {
+                    Models.Action action = new Models.Action() { ActionType = ActionEnum.SumMatrices, Result = JsonConvert.SerializeObject(resultIntMatrix), };
+                    await dbContext.Actions.AddAsync(action);
 
+
+
+                    Value entityOne = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
+
+                    await dbContext.Values.AddAsync(entityOne);
+
+                    Value entityTwo = new Value() { Number = JsonConvert.SerializeObject(matrixTwo), Action = action };
+
+                    await dbContext.Values.AddAsync(entityTwo);
+
+
+                    await dbContext.SaveChangesAsync();
+                    ResultForm resultForm = new ResultForm(ConvertMatrixToString(resultIntMatrix));
+                    resultForm.Show();
+                    return;
+                }
+                if (resultFloatMatrix is not null)
+                {
+                    Models.Action action = new Models.Action() { ActionType = ActionEnum.SumMatrices, Result = JsonConvert.SerializeObject(resultFloatMatrix), };
+                    await dbContext.Actions.AddAsync(action);
+
+
+
+                    Value entityOne = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
+
+                    await dbContext.Values.AddAsync(entityOne);
+
+                    Value entityTwo = new Value() { Number = JsonConvert.SerializeObject(matrixTwo), Action = action };
+
+                    await dbContext.Values.AddAsync(entityTwo);
+
+
+                    await dbContext.SaveChangesAsync();
+                    ResultForm resultForm = new ResultForm(ConvertMatrixToString(resultFloatMatrix));
+                    resultForm.Show();
+                    return;
                 }
 
-                await dbContext.SaveChangesAsync();
+
             }
-            ResultForm resultForm = new ResultForm("Результат!");
-            resultForm.Show();
+
         }
 
         private void MatrixOneDataDridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -383,9 +537,10 @@ namespace DynamicMatrix_WF
                 MatrixOneDataDridView.CurrentCell.Value = 0;
                 MessageBox.Show("Недопустимое значение.");
             }
-
+            MatrixOneDataDridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             MatrixOneDataDridView.CellValueChanged += MatrixOneDataDridView_CellValueChanged!;
 
         }
+
     }
 }
