@@ -43,6 +43,12 @@
             numericUpDown3 = new NumericUpDown();
             numericUpDown4 = new NumericUpDown();
             label4 = new Label();
+            comboBox1 = new ComboBox();
+            menuStrip1 = new MenuStrip();
+            экспортToolStripMenuItem = new ToolStripMenuItem();
+            fileTXTToolStripMenuItem = new ToolStripMenuItem();
+            wordФайлToolStripMenuItem = new ToolStripMenuItem();
+            saveFileDialog1 = new SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)MatrixOneDataDridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
@@ -52,6 +58,7 @@
             matrixTwoGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown4).BeginInit();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // MatrixOneDataDridView
@@ -124,9 +131,9 @@
             // 
             groupBox1.Controls.Add(radioButton2);
             groupBox1.Controls.Add(radioButton1);
-            groupBox1.Location = new Point(24, 12);
+            groupBox1.Location = new Point(20, 24);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(200, 100);
+            groupBox1.Size = new Size(200, 88);
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             groupBox1.Text = "Тип операций";
@@ -134,7 +141,7 @@
             // radioButton2
             // 
             radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(33, 60);
+            radioButton2.Location = new Point(33, 54);
             radioButton2.Name = "radioButton2";
             radioButton2.Size = new Size(98, 19);
             radioButton2.TabIndex = 7;
@@ -148,9 +155,9 @@
             groupBox2.Controls.Add(numericUpDown1);
             groupBox2.Controls.Add(numericUpDown2);
             groupBox2.Controls.Add(label2);
-            groupBox2.Location = new Point(253, 12);
+            groupBox2.Location = new Point(253, 24);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(200, 100);
+            groupBox2.Size = new Size(200, 88);
             groupBox2.TabIndex = 8;
             groupBox2.TabStop = false;
             groupBox2.Text = "Матрица #1";
@@ -161,9 +168,9 @@
             matrixTwoGroupBox.Controls.Add(numericUpDown3);
             matrixTwoGroupBox.Controls.Add(numericUpDown4);
             matrixTwoGroupBox.Controls.Add(label4);
-            matrixTwoGroupBox.Location = new Point(479, 12);
+            matrixTwoGroupBox.Location = new Point(480, 27);
             matrixTwoGroupBox.Name = "matrixTwoGroupBox";
-            matrixTwoGroupBox.Size = new Size(200, 100);
+            matrixTwoGroupBox.Size = new Size(200, 89);
             matrixTwoGroupBox.TabIndex = 9;
             matrixTwoGroupBox.TabStop = false;
             matrixTwoGroupBox.Text = "Матрица #2";
@@ -203,16 +210,60 @@
             label4.TabIndex = 4;
             label4.Text = "Столбцы";
             // 
+            // comboBox1
+            // 
+            comboBox1.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "Суммирование матриц", "Вычитание матриц", "Перемножение матриц", "Умножение матрицы на число", "Деление матриц", "Нахождение определителя", "Транспонирование матрицы", "Нахождение обратной матрицы" });
+            comboBox1.Location = new Point(20, 435);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(182, 24);
+            comboBox1.TabIndex = 10;
+            comboBox1.DrawItem += comboBox1_DrawItem;
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { экспортToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(744, 24);
+            menuStrip1.TabIndex = 11;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // экспортToolStripMenuItem
+            // 
+            экспортToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fileTXTToolStripMenuItem, wordФайлToolStripMenuItem });
+            экспортToolStripMenuItem.Name = "экспортToolStripMenuItem";
+            экспортToolStripMenuItem.Size = new Size(64, 20);
+            экспортToolStripMenuItem.Text = "Экспорт";
+            // 
+            // fileTXTToolStripMenuItem
+            // 
+            fileTXTToolStripMenuItem.Name = "fileTXTToolStripMenuItem";
+            fileTXTToolStripMenuItem.Size = new Size(180, 22);
+            fileTXTToolStripMenuItem.Text = "TXT Файл";
+            fileTXTToolStripMenuItem.Click += fileTXTToolStripMenuItem_Click;
+            // 
+            // wordФайлToolStripMenuItem
+            // 
+            wordФайлToolStripMenuItem.Name = "wordФайлToolStripMenuItem";
+            wordФайлToolStripMenuItem.Size = new Size(180, 22);
+            wordФайлToolStripMenuItem.Text = "Word Файл";
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(744, 489);
+            ClientSize = new Size(744, 573);
+            Controls.Add(comboBox1);
             Controls.Add(matrixTwoGroupBox);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(MatrixTwoDataDridView);
             Controls.Add(MatrixOneDataDridView);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "FormMain";
             Text = "Form1";
             Load += FormMain_Load;
@@ -228,7 +279,10 @@
             matrixTwoGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown4).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -248,5 +302,11 @@
         private NumericUpDown numericUpDown3;
         private NumericUpDown numericUpDown4;
         private Label label4;
+        private ComboBox comboBox1;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem экспортToolStripMenuItem;
+        private ToolStripMenuItem fileTXTToolStripMenuItem;
+        private ToolStripMenuItem wordФайлToolStripMenuItem;
+        private SaveFileDialog saveFileDialog1;
     }
 }
