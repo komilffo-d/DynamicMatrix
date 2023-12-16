@@ -267,7 +267,7 @@ namespace DynamicMatrix_WF
             return isFloat;
         }
 
-        private bool checkMatricesEqualityLength(string[,] matrixOne, string[,] matrixTwo)
+        private bool checkMatricesEqualityDestinationLength(string[,] matrixOne, string[,] matrixTwo)
         {
             int rows1 = matrixOne.GetLength(0);
             int columns1 = matrixOne.GetLength(1);
@@ -276,6 +276,14 @@ namespace DynamicMatrix_WF
             int columns2 = matrixTwo.GetLength(1);
 
             return (rows1 == rows2) && (columns1 == columns2);
+        }
+        private bool checkMatricesEqualityMirrorDestinationLength(string[,] matrixOne, string[,] matrixTwo)
+        {
+            int columns1 = matrixOne.GetLength(1);
+
+            int rows2 = matrixTwo.GetLength(0);
+
+            return (columns1 == rows2);
         }
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
@@ -331,9 +339,27 @@ namespace DynamicMatrix_WF
             var cb = sender as ComboBox;
 
             if (cb.SelectedItem != null && cb.SelectedItem is ComboBoxItem && ((ComboBoxItem)cb.SelectedItem).Selectable == false)
-            {
                 cb.SelectedIndex = -1;
+
+
+            if (cb.SelectedItem != null && cb.SelectedItem is ComboBoxItem && ((ComboBoxItem)cb.SelectedItem).Text == "”множение матрицы на число")
+            {
+
+                NumberLabel.Visible = true;
+                NumberTextBox.Visible = true;
+                NumberTextBox.Enabled = true;
+                NumberTextBox.Clear();
+
+
             }
+            else
+            {
+                NumberLabel.Visible = false;
+                NumberTextBox.Visible = false;
+                NumberTextBox.Enabled = false;
+                NumberTextBox.Clear();
+            }
+
 
         }
 
@@ -447,22 +473,102 @@ namespace DynamicMatrix_WF
                 int[,] resultIntMatrix = default!;
                 float[,] resultFloatMatrix = default!;
 
+                int? resultInt = null;
+                float? resultFloat = null;
 
                 if (Enum.IsDefined(typeof(ActionEnum), ((ComboBoxItem)comboBox1.SelectedItem).Value))
                 {
                     switch ((ActionEnum)((ComboBoxItem)comboBox1.SelectedItem).Value)
                     {
                         case ActionEnum.SumMatrices when checkMatrixFloat(matrixOne) || checkMatrixFloat(matrixTwo):
-                            if (checkMatricesEqualityLength(matrixOne, matrixTwo))
+                            if (checkMatricesEqualityDestinationLength(matrixOne, matrixTwo))
                                 resultFloatMatrix = DynamicMatrix.AddMatrixFloat(ConvertMatrixToFloat(matrixOne), ConvertMatrixToFloat(matrixTwo), (nint)(matrixOne.GetLength(0) + matrixTwo.GetLength(0)) / 2, (nint)(matrixOne.GetLength(1) + matrixTwo.GetLength(1)) / 2);
                             else
                                 MessageBox.Show("ћатрицы не совпадают по размеру.");
                             break;
                         case ActionEnum.SumMatrices:
-                            if (checkMatricesEqualityLength(matrixOne, matrixTwo))
+                            if (checkMatricesEqualityDestinationLength(matrixOne, matrixTwo))
                                 resultIntMatrix = DynamicMatrix.AddMatrixInt(ConvertMatrixToInt(matrixOne), ConvertMatrixToInt(matrixTwo), (nint)(matrixOne.GetLength(0) + matrixTwo.GetLength(0)) / 2, (nint)(matrixOne.GetLength(1) + matrixTwo.GetLength(1)) / 2);
                             else
                                 MessageBox.Show("ћатрицы не совпадают по размеру.");
+                            break;
+                        case ActionEnum.SubtractMatrices when checkMatrixFloat(matrixOne) || checkMatrixFloat(matrixTwo):
+                            if (checkMatricesEqualityDestinationLength(matrixOne, matrixTwo))
+                                resultFloatMatrix = DynamicMatrix.SubtractMatricesFloat(ConvertMatrixToFloat(matrixOne), ConvertMatrixToFloat(matrixTwo), (nint)(matrixOne.GetLength(0) + matrixTwo.GetLength(0)) / 2, (nint)(matrixOne.GetLength(1) + matrixTwo.GetLength(1)) / 2);
+                            else
+                                MessageBox.Show("ћатрицы не совпадают по размеру.");
+                            break;
+                        case ActionEnum.SubtractMatrices:
+                            if (checkMatricesEqualityDestinationLength(matrixOne, matrixTwo))
+                                resultIntMatrix = DynamicMatrix.SubtractMatricesInt(ConvertMatrixToInt(matrixOne), ConvertMatrixToInt(matrixTwo), (nint)(matrixOne.GetLength(0) + matrixTwo.GetLength(0)) / 2, (nint)(matrixOne.GetLength(1) + matrixTwo.GetLength(1)) / 2);
+                            else
+                                MessageBox.Show("ћатрицы не совпадают по размеру.");
+                            break;
+                        case ActionEnum.MultiplyMatrices when checkMatrixFloat(matrixOne) || checkMatrixFloat(matrixTwo):
+                            if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixTwo))
+                                resultFloatMatrix = DynamicMatrix.MultiplyMatricesFloat(ConvertMatrixToFloat(matrixOne), ConvertMatrixToFloat(matrixTwo), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1), (nint)matrixTwo.GetLength(0), (nint)matrixTwo.GetLength(1));
+                            else
+                                MessageBox.Show("ћатрицы не совпадают по размеру перемножаемых измерений.");
+                            break;
+                        case ActionEnum.MultiplyMatrices:
+                            if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixTwo))
+                                resultIntMatrix = DynamicMatrix.MultiplyMatricesInt(ConvertMatrixToInt(matrixOne), ConvertMatrixToInt(matrixTwo), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1), (nint)matrixTwo.GetLength(0), (nint)matrixTwo.GetLength(1));
+                            else
+                                MessageBox.Show("ћатрицы не совпадают по размеру перемножаемых измерений.");
+                            break;
+                        case ActionEnum.MultiplicationMatrixOnNumber when checkMatrixFloat(matrixOne):
+
+                            if (float.TryParse(NumberTextBox.Text, out float numberFloat))
+                                resultFloatMatrix = DynamicMatrix.MultiplicationOnNumberFloat(ConvertMatrixToFloat(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1), numberFloat);
+                            else
+                                MessageBox.Show("„исло не задано или имеет не верный формат!");
+                            break;
+                        case ActionEnum.MultiplicationMatrixOnNumber:
+                            if (int.TryParse(NumberTextBox.Text, out int numberInt))
+                                resultIntMatrix = DynamicMatrix.MultiplicationOnNumberInt(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1), numberInt);
+                            else
+                                MessageBox.Show("„исло не задано или имеет не верный формат!");
+                            break;
+                        case ActionEnum.DivisionMatrix when checkMatrixFloat(matrixOne) || checkMatrixFloat(matrixTwo):
+                            if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixTwo))
+                                resultFloatMatrix = DynamicMatrix.DivisionMatrixFloat(ConvertMatrixToFloat(matrixOne), ConvertMatrixToFloat(matrixTwo), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1), (nint)matrixTwo.GetLength(0), (nint)matrixTwo.GetLength(1));
+                            else
+                                MessageBox.Show("ћатрицы не совпадают по размеру перемножаемых измерений.");
+                            break;
+                        case ActionEnum.DivisionMatrix:
+                            if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixTwo))
+                                resultIntMatrix = DynamicMatrix.DivisionMatrixInt(ConvertMatrixToInt(matrixOne), ConvertMatrixToInt(matrixTwo), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1), (nint)matrixTwo.GetLength(0), (nint)matrixTwo.GetLength(1));
+                            else
+                                MessageBox.Show("ћатрицы не совпадают по размеру перемножаемых измерений.");
+                            break;
+
+                        case ActionEnum.DeterminantMatrix when checkMatrixFloat(matrixOne):
+                            if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne))
+                                resultFloat = DynamicMatrix.DeterminantFloat(ConvertMatrixToFloat(matrixOne), (nint)(matrixOne.GetLength(0) + matrixOne.GetLength(1)) / 2);
+                            else
+                                MessageBox.Show("ћатрица не €вл€етс€ квадратной");
+                            break;
+                        case ActionEnum.DeterminantMatrix:
+                            if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne))
+                                resultInt = DynamicMatrix.DeterminantInt(ConvertMatrixToInt(matrixOne), (nint)(matrixOne.GetLength(0) + matrixOne.GetLength(1)) / 2);
+                            else
+                                MessageBox.Show("ћатрица не €вл€етс€ квадратной.");
+                            break;
+                        case ActionEnum.TranspositionMatrix when checkMatrixFloat(matrixOne):
+                            resultFloatMatrix = DynamicMatrix.TranspositionFloat(ConvertMatrixToFloat(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+
+                            break;
+                        case ActionEnum.TranspositionMatrix:
+                            resultIntMatrix = DynamicMatrix.TranspositionInt(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+
+                            break;
+                        case ActionEnum.ReverseMatrix when checkMatrixFloat(matrixOne):
+                            resultFloatMatrix = DynamicMatrix.ReverseMatrixFloat(ConvertMatrixToFloat(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+
+                            break;
+                        case ActionEnum.ReverseMatrix:
+                            resultIntMatrix = DynamicMatrix.ReverseMatrixInt(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+
                             break;
                         default:
                             break;
@@ -470,7 +576,7 @@ namespace DynamicMatrix_WF
                 }
                 if (resultIntMatrix is not null)
                 {
-                    Models.Action action = new Models.Action() { ActionType = ActionEnum.SumMatrices, Result = JsonConvert.SerializeObject(resultIntMatrix), };
+                    Models.Action action = new Models.Action() { ActionType = (ActionEnum)((ComboBoxItem)comboBox1.SelectedItem).Value, Result = JsonConvert.SerializeObject(resultIntMatrix), };
                     await dbContext.Actions.AddAsync(action);
 
 
@@ -479,9 +585,7 @@ namespace DynamicMatrix_WF
 
                     await dbContext.Values.AddAsync(entityOne);
 
-                    Value entityTwo = new Value() { Number = JsonConvert.SerializeObject(matrixTwo), Action = action };
 
-                    await dbContext.Values.AddAsync(entityTwo);
 
 
                     await dbContext.SaveChangesAsync();
@@ -491,7 +595,7 @@ namespace DynamicMatrix_WF
                 }
                 if (resultFloatMatrix is not null)
                 {
-                    Models.Action action = new Models.Action() { ActionType = ActionEnum.SumMatrices, Result = JsonConvert.SerializeObject(resultFloatMatrix), };
+                    Models.Action action = new Models.Action() { ActionType = (ActionEnum)((ComboBoxItem)comboBox1.SelectedItem).Value, Result = JsonConvert.SerializeObject(resultFloatMatrix), };
                     await dbContext.Actions.AddAsync(action);
 
 
@@ -500,9 +604,12 @@ namespace DynamicMatrix_WF
 
                     await dbContext.Values.AddAsync(entityOne);
 
-                    Value entityTwo = new Value() { Number = JsonConvert.SerializeObject(matrixTwo), Action = action };
+                    if (matrixTwo.Length > 0)
+                    {
+                        Value entityTwo = new Value() { Number = JsonConvert.SerializeObject(matrixTwo), Action = action };
 
-                    await dbContext.Values.AddAsync(entityTwo);
+                        await dbContext.Values.AddAsync(entityTwo);
+                    }
 
 
                     await dbContext.SaveChangesAsync();
@@ -510,7 +617,42 @@ namespace DynamicMatrix_WF
                     resultForm.Show();
                     return;
                 }
+                if (resultInt is not null)
+                {
+                    Models.Action action = new Models.Action() { ActionType = (ActionEnum)((ComboBoxItem)comboBox1.SelectedItem).Value, Result = resultInt.ToString(), };
+                    await dbContext.Actions.AddAsync(action);
 
+
+
+                    Value entity = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
+
+                    await dbContext.Values.AddAsync(entity);
+
+
+
+                    await dbContext.SaveChangesAsync();
+                    ResultForm resultForm = new ResultForm($@"ќпределитель равен: {resultInt}");
+                    resultForm.Show();
+                    return;
+                }
+                if (resultFloat is not null)
+                {
+                    Models.Action action = new Models.Action() { ActionType = (ActionEnum)((ComboBoxItem)comboBox1.SelectedItem).Value, Result = resultFloat.ToString(), };
+                    await dbContext.Actions.AddAsync(action);
+
+
+
+                    Value entity = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
+
+                    await dbContext.Values.AddAsync(entity);
+
+
+
+                    await dbContext.SaveChangesAsync();
+                    ResultForm resultForm = new ResultForm($@"ќпределитель равен: {resultFloat}");
+                    resultForm.Show();
+                    return;
+                }
 
             }
 
@@ -542,5 +684,28 @@ namespace DynamicMatrix_WF
 
         }
 
+        private void MatrixTwoDataDridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            string valueCell = MatrixTwoDataDridView.CurrentCell.Value.ToString()!;
+            if (valueCell.Contains("."))
+                valueCell = valueCell.Replace(".", ",");
+            MatrixTwoDataDridView.CellValueChanged -= MatrixTwoDataDridView_CellValueChanged!;
+
+            bool validateValueTypeInt = Int32.TryParse(valueCell, out int valueIntCell);
+            bool validateValueTypeFloat = Single.TryParse(valueCell, out float valueFloatCell);
+
+
+            if (validateValueTypeFloat)
+                MatrixTwoDataDridView.CurrentCell.Value = valueFloatCell;
+            else if (validateValueTypeInt)
+                MatrixTwoDataDridView.CurrentCell.Value = valueIntCell;
+            else
+            {
+                MatrixTwoDataDridView.CurrentCell.Value = 0;
+                MessageBox.Show("Ќедопустимое значение.");
+            }
+            MatrixTwoDataDridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            MatrixTwoDataDridView.CellValueChanged += MatrixTwoDataDridView_CellValueChanged!;
+        }
     }
 }

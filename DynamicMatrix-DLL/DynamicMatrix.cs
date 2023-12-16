@@ -144,7 +144,7 @@ namespace DynamicMatrix_DLL
                 return null;
             }
 
-            int[,] result = new int[rows1,cols1];
+            int[,] result = new int[rows1,cols2];
 
 
             for (IntPtr i = 0; i < rows1; ++i)

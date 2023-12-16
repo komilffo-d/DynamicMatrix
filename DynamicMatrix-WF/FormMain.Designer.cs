@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             MatrixOneDataDridView = new DataGridView();
             numericUpDown1 = new NumericUpDown();
             numericUpDown2 = new NumericUpDown();
@@ -47,11 +47,13 @@
             label4 = new Label();
             comboBox1 = new ComboBox();
             menuStrip1 = new MenuStrip();
+            экспортToolStripMenuItem = new ToolStripMenuItem();
+            fileTXTToolStripMenuItem = new ToolStripMenuItem();
             импортToolStripMenuItem = new ToolStripMenuItem();
             fileTXTImportoolStripMenuItem = new ToolStripMenuItem();
             ActionButton = new Button();
-            экспортToolStripMenuItem = new ToolStripMenuItem();
-            fileTXTToolStripMenuItem = new ToolStripMenuItem();
+            NumberTextBox = new TextBox();
+            NumberLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)MatrixOneDataDridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
@@ -68,25 +70,25 @@
             // 
             MatrixOneDataDridView.AllowUserToAddRows = false;
             MatrixOneDataDridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            MatrixOneDataDridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            MatrixOneDataDridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             MatrixOneDataDridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             MatrixOneDataDridView.Location = new Point(10, 130);
             MatrixOneDataDridView.Name = "MatrixOneDataDridView";
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Control;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            MatrixOneDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            MatrixOneDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             MatrixOneDataDridView.RowTemplate.Height = 25;
             MatrixOneDataDridView.Size = new Size(480, 270);
             MatrixOneDataDridView.TabIndex = 0;
@@ -139,6 +141,7 @@
             MatrixTwoDataDridView.Size = new Size(480, 270);
             MatrixTwoDataDridView.TabIndex = 5;
             MatrixTwoDataDridView.Visible = false;
+            MatrixTwoDataDridView.CellValueChanged += MatrixTwoDataDridView_CellValueChanged;
             // 
             // radioButton1
             // 
@@ -258,6 +261,20 @@
             menuStrip1.TabIndex = 11;
             menuStrip1.Text = "menuStrip1";
             // 
+            // экспортToolStripMenuItem
+            // 
+            экспортToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fileTXTToolStripMenuItem });
+            экспортToolStripMenuItem.Name = "экспортToolStripMenuItem";
+            экспортToolStripMenuItem.Size = new Size(64, 20);
+            экспортToolStripMenuItem.Text = "Экспорт";
+            // 
+            // fileTXTToolStripMenuItem
+            // 
+            fileTXTToolStripMenuItem.Name = "fileTXTToolStripMenuItem";
+            fileTXTToolStripMenuItem.Size = new Size(125, 22);
+            fileTXTToolStripMenuItem.Text = "TXT Файл";
+            fileTXTToolStripMenuItem.Click += fileTXTToolStripMenuItem_Click;
+            // 
             // импортToolStripMenuItem
             // 
             импортToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fileTXTImportoolStripMenuItem });
@@ -268,7 +285,7 @@
             // fileTXTImportoolStripMenuItem
             // 
             fileTXTImportoolStripMenuItem.Name = "fileTXTImportoolStripMenuItem";
-            fileTXTImportoolStripMenuItem.Size = new Size(180, 22);
+            fileTXTImportoolStripMenuItem.Size = new Size(125, 22);
             fileTXTImportoolStripMenuItem.Text = "TXT Файл";
             fileTXTImportoolStripMenuItem.Click += fileTXTImportoolStripMenuItem_Click;
             // 
@@ -282,25 +299,31 @@
             ActionButton.UseVisualStyleBackColor = true;
             ActionButton.Click += ActionButton_Click;
             // 
-            // экспортToolStripMenuItem
+            // NumberTextBox
             // 
-            экспортToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fileTXTToolStripMenuItem });
-            экспортToolStripMenuItem.Name = "экспортToolStripMenuItem";
-            экспортToolStripMenuItem.Size = new Size(64, 20);
-            экспортToolStripMenuItem.Text = "Экспорт";
+            NumberTextBox.Location = new Point(120, 406);
+            NumberTextBox.Name = "NumberTextBox";
+            NumberTextBox.Size = new Size(100, 23);
+            NumberTextBox.TabIndex = 13;
+            NumberTextBox.Visible = false;
             // 
-            // fileTXTToolStripMenuItem
+            // NumberLabel
             // 
-            fileTXTToolStripMenuItem.Name = "fileTXTToolStripMenuItem";
-            fileTXTToolStripMenuItem.Size = new Size(180, 22);
-            fileTXTToolStripMenuItem.Text = "TXT Файл";
-            fileTXTToolStripMenuItem.Click += fileTXTToolStripMenuItem_Click;
+            NumberLabel.AutoSize = true;
+            NumberLabel.Location = new Point(20, 409);
+            NumberLabel.Name = "NumberLabel";
+            NumberLabel.Size = new Size(90, 15);
+            NumberLabel.TabIndex = 14;
+            NumberLabel.Text = "Введите число:";
+            NumberLabel.Visible = false;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(744, 544);
+            Controls.Add(NumberLabel);
+            Controls.Add(NumberTextBox);
             Controls.Add(ActionButton);
             Controls.Add(comboBox1);
             Controls.Add(matrixTwoGroupBox);
@@ -354,5 +377,7 @@
         private Button ActionButton;
         private ToolStripMenuItem экспортToolStripMenuItem;
         private ToolStripMenuItem fileTXTToolStripMenuItem;
+        private TextBox NumberTextBox;
+        private Label NumberLabel;
     }
 }

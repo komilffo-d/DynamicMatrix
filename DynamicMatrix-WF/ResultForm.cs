@@ -1,6 +1,7 @@
 ﻿using Microsoft.Office.Interop.Word;
 using Syroot.Windows.IO;
 using System.Data;
+using System.Windows.Forms;
 using DataTable = System.Data.DataTable;
 
 namespace DynamicMatrix_WF
@@ -10,10 +11,20 @@ namespace DynamicMatrix_WF
         public ResultForm(string[,] data)
         {
             InitializeComponent();
+            menuStrip1.Visible = true;
+            menuStrip1.Enabled = true;
             ResultDataGridView.Visible = true;
             FillMatrix(data);
 
         }
+        public ResultForm(string data)
+        {
+            InitializeComponent();
+            label2.Visible = true;
+            label2.Text = data;
+
+        }
+
 
         private void FillMatrix(string[,] matrix)
         {

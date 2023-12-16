@@ -5,7 +5,7 @@
         SumMatrices = 1,
         SubtractMatrices,
         MultiplyMatrices,
-        MultiplicationmatrixOnNumber,
+        MultiplicationMatrixOnNumber,
         DivisionMatrix,
         DeterminantMatrix,
         TranspositionMatrix,

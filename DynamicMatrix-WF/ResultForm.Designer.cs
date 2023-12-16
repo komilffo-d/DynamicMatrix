@@ -34,6 +34,7 @@
             экспортToolStripMenuItem = new ToolStripMenuItem();
             fileTXTToolStripMenuItem = new ToolStripMenuItem();
             fileWordToolStripMenuItem = new ToolStripMenuItem();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)ResultDataGridView).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -65,12 +66,14 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.Enabled = false;
             menuStrip1.Items.AddRange(new ToolStripItem[] { экспортToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(591, 24);
             menuStrip1.TabIndex = 2;
             menuStrip1.Text = "menuStrip1";
+            menuStrip1.Visible = false;
             // 
             // экспортToolStripMenuItem
             // 
@@ -82,22 +85,35 @@
             // fileTXTToolStripMenuItem
             // 
             fileTXTToolStripMenuItem.Name = "fileTXTToolStripMenuItem";
-            fileTXTToolStripMenuItem.Size = new Size(180, 22);
+            fileTXTToolStripMenuItem.Size = new Size(135, 22);
             fileTXTToolStripMenuItem.Text = "TXT Файл";
             fileTXTToolStripMenuItem.Click += fileTXTToolStripMenuItem_Click;
             // 
             // fileWordToolStripMenuItem
             // 
             fileWordToolStripMenuItem.Name = "fileWordToolStripMenuItem";
-            fileWordToolStripMenuItem.Size = new Size(180, 22);
+            fileWordToolStripMenuItem.Size = new Size(135, 22);
             fileWordToolStripMenuItem.Text = "Word Файл";
             fileWordToolStripMenuItem.Click += fileWordToolStripMenuItem_Click;
+            // 
+            // label2
+            // 
+            label2.Dock = DockStyle.Fill;
+            label2.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Location = new Point(0, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(591, 449);
+            label2.TabIndex = 3;
+            label2.Text = "label2";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            label2.Visible = false;
             // 
             // ResultForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(591, 449);
+            Controls.Add(label2);
             Controls.Add(ResultDataGridView);
             Controls.Add(label1);
             Controls.Add(menuStrip1);
@@ -119,5 +135,6 @@
         private ToolStripMenuItem экспортToolStripMenuItem;
         private ToolStripMenuItem fileTXTToolStripMenuItem;
         private ToolStripMenuItem fileWordToolStripMenuItem;
+        private Label label2;
     }
 }
