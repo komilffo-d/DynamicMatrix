@@ -1,4 +1,8 @@
-﻿namespace DynamicMatrix_DLL
+﻿using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Single;
+using System.Drawing;
+
+namespace DynamicMatrix_DLL
 {
     public static class DynamicMatrix
     {
@@ -265,61 +269,56 @@
               Умножение первого сомножителя на обратную матрицу второго сомножителя    */
         public static int[,] DivisionMatrixInt(int[,] matrix1, int[,] matrix2, IntPtr rows1, IntPtr cols1, IntPtr rows2, IntPtr cols2)
         {
+            float[,] floatMatrix1 = new float[rows1, cols1];
 
-            if (cols1 != rows2)
+            for (int i = 0; i < rows1; i++)
             {
-                return null;
-            }
-
-            int[,] matrix_in = TranspositionInt(matrix2, rows2, cols2);
-
-            int[,] result = new int[rows1, cols2];
-
-
-            for (IntPtr i = 0; i < rows1; ++i)
-            {
-                for (IntPtr j = 0; j < cols2; ++j)
+                for (int j = 0; j < cols1; j++)
                 {
-                    for (IntPtr k = 0; k < cols1; ++k)
-                    {
-                        result[i, j] += matrix1[i, k] * matrix_in[j, k];
-                    }
+                    floatMatrix1[i, j] = (float)matrix1[i, j];
+                }
+            }
+            float[,] floatMatrix2 = new float[rows2, cols2];
+
+            for (int i = 0; i < rows2; i++)
+            {
+                for (int j = 0; j < cols2; j++)
+                {
+                    floatMatrix2[i, j] = (float)matrix2[i, j];
                 }
             }
 
+            Matrix<float> mathNetMatrix1 = Matrix<float>.Build.DenseOfArray(floatMatrix1);
+            Matrix<float> mathNetMatrix2 = Matrix<float>.Build.DenseOfArray(floatMatrix2).Inverse();
 
-            return result;
+
+            float[,] result = mathNetMatrix1.Multiply(mathNetMatrix2).ToArray();
+
+            int[,] resultArray = new int[result.GetLength(0), result.GetLength(1)];
+
+            for (int i = 0; i < result.GetLength(0); i++)
+            {
+                for (int j = 0; j < result.GetLength(1); j++)
+                {
+                    resultArray[i, j] = Convert.ToInt32(result[i, j]);
+                }
+            }
+            return resultArray;
         }
 
 
 
 
         public static float[,] DivisionMatrixFloat(float[,] matrix1, float[,] matrix2, IntPtr rows1, IntPtr cols1, IntPtr rows2, IntPtr cols2)
-        {
+        {   
+            Matrix<float> mathNetMatrix1 = Matrix<float>.Build.DenseOfArray(matrix1);
+            Matrix<float> mathNetMatrix2 = Matrix<float>.Build.DenseOfArray(matrix2).Inverse();
 
-            if (cols1 != rows2)
-            {
-                return null;
-            }
-
-            float[,] matrix_in = TranspositionFloat(matrix2, rows2, cols2);
-
-            float[,] result = new float[rows1, cols2];
+            
+            Matrix<float> result=mathNetMatrix1.Multiply(mathNetMatrix2);
+            return result!.ToArray();
 
 
-            for (IntPtr i = 0; i < rows1; ++i)
-            {
-                for (IntPtr j = 0; j < cols2; ++j)
-                {
-                    for (IntPtr k = 0; k < cols1; ++k)
-                    {
-                        result[i, j] += matrix1[i, k] * matrix_in[j, k];
-                    }
-                }
-            }
-
-
-            return result;
         }
 
 
@@ -338,98 +337,31 @@
         public static int DeterminantInt(int[,] matrix, IntPtr size)
         {
 
-            int[][] mat = new int[size][];
-            for (IntPtr i = 0; i < size; ++i)
+            float[,] floatMatrix = new float[size, size];
+
+            for (int i = 0; i < size; i++)
             {
-                mat[i] = new int[size];
-                for (IntPtr j = 0; j < size; ++j)
+                for (int j = 0; j < size; j++)
                 {
-                    mat[i][j] = matrix[i, j];
+                    floatMatrix[i, j] = (float)matrix[i, j];
                 }
             }
+            Matrix<float> mathNetMatrix = DenseMatrix.OfArray(floatMatrix);
+            float determinant = mathNetMatrix.Determinant();
 
-            int det = 1;
-            for (IntPtr i = 0; i < size; ++i)
-            {
-                IntPtr maxRow = i;
-                for (IntPtr j = i + 1; j < size; ++j)
-                {
-                    if (Math.Abs(mat[j][i]) > Math.Abs(mat[maxRow][i]))
-                    {
-                        maxRow = j;
-                    }
-                }
-                if (maxRow != i)
-                {
-                    (mat[i], mat[maxRow]) = (mat[maxRow], mat[i]);
-                    det = -det;
-                }
-                if (mat[i][i] == 0)
-                {
-                    return 0;
-                }
-                det *= mat[i][i];
-                for (IntPtr j = i + 1; j < size; ++j)
-                {
-                    int factor = mat[j][i] / mat[i][i];
-                    for (IntPtr k = i; k < size; ++k)
-                    {
-                        mat[j][k] -= factor * mat[i][k];
-                    }
-                }
-            }
+            return Convert.ToInt32(determinant);
 
 
-            return det;
+
         }
 
         public static float DeterminantFloat(float[,] matrix, IntPtr size)
         {
-            float[][] mat = new float[size][];
-            for (IntPtr i = 0; i < size; ++i)
-            {
-                mat[i] = new float[size];
-                for (IntPtr j = 0; j < size; ++j)
-                {
-                    mat[i][j] = matrix[i, j];
-                }
-            }
 
-            float det = 1;
-            for (IntPtr i = 0; i < size; ++i)
-            {
-                IntPtr maxRow = i;
-                for (IntPtr j = i + 1; j < size; ++j)
-                {
-                    if (Math.Abs(mat[j][i]) > Math.Abs(mat[maxRow][i]))
-                    {
-                        maxRow = j;
-                    }
-                }
-                if (maxRow != i)
-                {
-                    (mat[i], mat[maxRow]) = (mat[maxRow], mat[i]);
+            Matrix<float> mathNetMatrix = DenseMatrix.OfArray(matrix);
+            float determinant = mathNetMatrix.Determinant();
 
-                    det = -det;
-                }
-                if (mat[i][i] == 0)
-                {
-                    return 0;
-                }
-                det *= mat[i][i];
-                for (IntPtr j = i + 1; j < size; ++j)
-                {
-                    float factor = mat[j][i] / mat[i][i];
-                    for (IntPtr k = i; k < size; ++k)
-                    {
-                        mat[j][k] -= factor * mat[i][k];
-                    }
-                }
-            }
-
-
-
-            return det;
+            return determinant;
         }
 
 
@@ -466,19 +398,10 @@
 
         public static float[,] TranspositionFloat(float[,] matrix, IntPtr rows, IntPtr cols)
         {
+            Matrix<float> mathNetMatrix = Matrix<float>.Build.DenseOfArray(matrix);
+            Matrix<float> transpositionMatrix = mathNetMatrix.Transpose();
+            return transpositionMatrix.ToArray();
 
-            float[,] result = new float[cols, rows];
-
-
-            for (IntPtr i = 0; i < rows; ++i)
-            {
-                for (IntPtr j = 0; j < cols; ++j)
-                {
-                    result[j, i] = matrix[i, j];
-                }
-            }
-
-            return result;
         }
 
 
@@ -494,109 +417,31 @@
         /*    Операция нахождения обратной матрицы
               Если матрица вырожденная или неквадратная, то она не имеет обратной матрицы
               Обратная матрица существует, если определитель не равен нулю    */
-        public static int[,] ReverseMatrixInt(int[,] matrix, IntPtr rows, IntPtr cols)
+        public static float[,] ReverseMatrixInt(int[,] matrix, IntPtr rows, IntPtr cols)
         {
-
-            int[,] augmentedMatrix = new int[rows, 2 * cols];
+            float[,] floatMatrix = new float[rows, cols];
 
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    augmentedMatrix[i, j] = matrix[i, j];
-                    augmentedMatrix[i, j + cols] = (i == j) ? 1 : 0;
+                    floatMatrix[i, j] = (float)matrix[i, j];
                 }
             }
 
-
-            for (int i = 0; i < rows; i++)
-            {
-                int scalar = augmentedMatrix[i, i];
-
-                for (int j = 0; j < 2 * cols; j++)
-                {
-                    augmentedMatrix[i, j] /= scalar==0 ? 1 : scalar;
-                }
-
-                for (int k = 0; k < rows; k++)
-                {
-                    if (k != i)
-                    {
-                        int factor = augmentedMatrix[k, i];
-
-                        for (int j = 0; j < 2 * cols; j++)
-                        {
-                            augmentedMatrix[k, j] -= factor * augmentedMatrix[i, j];
-                        }
-                    }
-                }
-            }
-
-            int[,] resultMatrix = new int[rows, cols];  
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    resultMatrix[i, j] = augmentedMatrix[i, j + cols];
-                }
-            }
-
-            return resultMatrix;
+            Matrix<float> mathNetMatrix = Matrix<float>.Build.DenseOfArray(floatMatrix);
+            Matrix<float> reverseMatrix = mathNetMatrix.Inverse();
+            return reverseMatrix.ToArray();
         }
 
 
 
         public static float[,] ReverseMatrixFloat(float[,] matrix, IntPtr rows, IntPtr cols)
         {
+            Matrix<float> mathNetMatrix = Matrix<float>.Build.DenseOfArray(matrix);
+            Matrix<float> reverseMatrix = mathNetMatrix.Inverse();
+            return reverseMatrix.ToArray();
 
-            float[,] augmentedMatrix = new float[rows, 2 * cols];
-
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    augmentedMatrix[i, j] = matrix[i, j];
-                    augmentedMatrix[i, j + cols] = (i == j) ? 1 : 0;
-                }
-            }
-
-
-            for (int i = 0; i < rows; i++)
-            {
-                float scalar = augmentedMatrix[i, i];
-
-                for (int j = 0; j < 2 * cols; j++)
-                {
-                    augmentedMatrix[i, j] /= scalar ==0.0f ? 1 : scalar;
-                }
-
-                for (int k = 0; k < rows; k++)
-                {
-                    if (k != i)
-                    {
-                        float factor = augmentedMatrix[k, i];
-
-                        for (int j = 0; j < 2 * cols; j++)
-                        {
-                            augmentedMatrix[k, j] -= factor * augmentedMatrix[i, j];
-                        }
-                    }
-                }
-            }
-
-            float[,] resultMatrix = new float[rows, cols];
-
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    resultMatrix[i, j] = augmentedMatrix[i, j + cols];
-                }
-            }
-
-            return resultMatrix;
         }
 
 

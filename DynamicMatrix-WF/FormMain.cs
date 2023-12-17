@@ -592,7 +592,7 @@ namespace DynamicMatrix_WF
                             break;
                         case ActionEnum.ReverseMatrix:
                             if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne) && DynamicMatrix.DeterminantInt(ConvertMatrixToInt(matrixOne), (nint)(matrixOne.GetLength(0) + matrixOne.GetLength(1)) / 2) != 0)
-                                resultIntMatrix = DynamicMatrix.ReverseMatrixInt(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+                                resultFloatMatrix = DynamicMatrix.ReverseMatrixInt(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
                             else
                                 MessageBox.Show("ћатрица €вл€етс€ вырожденной или неквадратной.");
 
