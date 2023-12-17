@@ -95,8 +95,6 @@ namespace DynamicMatrix_WF
             foreach (DataGridViewColumn column in MatrixOneDataDridView.Columns)
 
             {
-
-                column.Width = 30;
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
                 column.ReadOnly = false;
             }
@@ -148,7 +146,6 @@ namespace DynamicMatrix_WF
             foreach (DataGridViewColumn column in MatrixTwoDataDridView.Columns)
 
             {
-                column.Width = 30;
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
                 column.ReadOnly = false;
             }
@@ -303,10 +300,7 @@ namespace DynamicMatrix_WF
                 clearAllControls();
                 RedrawComboBox(false);
                 matrixTwoGroupBox.Visible = false;
-                /*                int offsetMatrix = 120;
-                                MatrixOneDataDridView.Width = MatrixTwoDataDridView.Width + offsetMatrix;
-                                MatrixTwoDataDridView.Width = MatrixTwoDataDridView.Width + offsetMatrix;
-                                MatrixTwoDataDridView.Location = new Point(MatrixTwoDataDridView.Location.X - offsetMatrix, 130);*/
+
                 MatrixTwoDataDridView.Visible = false;
             }
 
@@ -320,11 +314,6 @@ namespace DynamicMatrix_WF
                 clearAllControls();
                 RedrawComboBox(true);
                 matrixTwoGroupBox.Visible = true;
-                /*                int offsetMatrix = 120;
-
-                                MatrixOneDataDridView.Width = MatrixTwoDataDridView.Width - offsetMatrix;
-                                MatrixTwoDataDridView.Width = MatrixTwoDataDridView.Width - offsetMatrix;
-                                MatrixTwoDataDridView.Location = new Point(MatrixTwoDataDridView.Location.X + offsetMatrix, 130);*/
                 MatrixTwoDataDridView.Visible = true;
             }
 
@@ -722,7 +711,7 @@ namespace DynamicMatrix_WF
                 MatrixOneDataDridView.CurrentCell.Value = 0;
                 MessageBox.Show("Недопустимое значение.");
             }
-            MatrixOneDataDridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+
             MatrixOneDataDridView.CellValueChanged += MatrixOneDataDridView_CellValueChanged!;
 
         }
@@ -747,7 +736,6 @@ namespace DynamicMatrix_WF
                 MatrixTwoDataDridView.CurrentCell.Value = 0;
                 MessageBox.Show("Недопустимое значение.");
             }
-            MatrixTwoDataDridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             MatrixTwoDataDridView.CellValueChanged += MatrixTwoDataDridView_CellValueChanged!;
         }
         protected internal void showLoader()

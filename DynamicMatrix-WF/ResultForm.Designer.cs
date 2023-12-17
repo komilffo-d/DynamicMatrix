@@ -55,8 +55,8 @@
             // 
             ResultDataGridView.AllowUserToAddRows = false;
             ResultDataGridView.AllowUserToDeleteRows = false;
-            ResultDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            ResultDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            ResultDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            ResultDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
@@ -66,7 +66,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             ResultDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             ResultDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            ResultDataGridView.Location = new Point(135, 131);
+            ResultDataGridView.Location = new Point(29, 32);
             ResultDataGridView.Name = "ResultDataGridView";
             ResultDataGridView.ReadOnly = true;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -78,7 +78,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             ResultDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             ResultDataGridView.RowTemplate.Height = 25;
-            ResultDataGridView.Size = new Size(294, 179);
+            ResultDataGridView.Size = new Size(495, 226);
             ResultDataGridView.TabIndex = 1;
             ResultDataGridView.Visible = false;
             // 
@@ -120,7 +120,7 @@
             label2.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
             label2.Location = new Point(0, 0);
             label2.Name = "label2";
-            label2.Size = new Size(591, 449);
+            label2.Size = new Size(561, 270);
             label2.TabIndex = 3;
             label2.Text = "label2";
             label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -130,9 +130,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(591, 449);
-            Controls.Add(label2);
+            ClientSize = new Size(561, 270);
             Controls.Add(ResultDataGridView);
+            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;

@@ -28,18 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            MatrixOneDataDridView = new DataGridView();
             numericUpDown1 = new NumericUpDown();
             numericUpDown2 = new NumericUpDown();
             label1 = new Label();
             label2 = new Label();
-            MatrixTwoDataDridView = new DataGridView();
             radioButton1 = new RadioButton();
             groupBox1 = new GroupBox();
             radioButton2 = new RadioButton();
@@ -59,10 +57,11 @@
             NumberTextBox = new TextBox();
             NumberLabel = new Label();
             pictureBox1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)MatrixOneDataDridView).BeginInit();
+            MatrixTwoDataDridView = new DataGridView();
+            MatrixOneDataDridView = new DataGridView();
+            tableLayoutPanel1 = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)MatrixTwoDataDridView).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             matrixTwoGroupBox.SuspendLayout();
@@ -70,44 +69,10 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDown4).BeginInit();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)MatrixTwoDataDridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)MatrixOneDataDridView).BeginInit();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // MatrixOneDataDridView
-            // 
-            MatrixOneDataDridView.AllowUserToAddRows = false;
-            MatrixOneDataDridView.AllowUserToDeleteRows = false;
-            MatrixOneDataDridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            MatrixOneDataDridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            MatrixOneDataDridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            MatrixOneDataDridView.DefaultCellStyle = dataGridViewCellStyle2;
-            MatrixOneDataDridView.Location = new Point(12, 130);
-            MatrixOneDataDridView.Name = "MatrixOneDataDridView";
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            MatrixOneDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            MatrixOneDataDridView.RowTemplate.Height = 25;
-            MatrixOneDataDridView.Size = new Size(480, 270);
-            MatrixOneDataDridView.TabIndex = 1333;
-            MatrixOneDataDridView.CellValueChanged += MatrixOneDataDridView_CellValueChanged;
             // 
             // numericUpDown1
             // 
@@ -146,38 +111,6 @@
             label2.Size = new Size(57, 15);
             label2.TabIndex = 4;
             label2.Text = "Столбцы";
-            // 
-            // MatrixTwoDataDridView
-            // 
-            MatrixTwoDataDridView.AllowUserToAddRows = false;
-            MatrixTwoDataDridView.AllowUserToDeleteRows = false;
-            MatrixTwoDataDridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            MatrixTwoDataDridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            MatrixTwoDataDridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Control;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            MatrixTwoDataDridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            MatrixTwoDataDridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            MatrixTwoDataDridView.Location = new Point(253, 130);
-            MatrixTwoDataDridView.Name = "MatrixTwoDataDridView";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            MatrixTwoDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            MatrixTwoDataDridView.RowTemplate.Height = 25;
-            MatrixTwoDataDridView.Size = new Size(480, 270);
-            MatrixTwoDataDridView.TabIndex = 5;
-            MatrixTwoDataDridView.Visible = false;
-            MatrixTwoDataDridView.CellValueChanged += MatrixTwoDataDridView_CellValueChanged;
             // 
             // radioButton1
             // 
@@ -283,7 +216,7 @@
             // 
             // comboBox1
             // 
-            comboBox1.Anchor = AnchorStyles.Bottom;
+            comboBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             comboBox1.DrawMode = DrawMode.OwnerDrawVariable;
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
@@ -377,11 +310,96 @@
             pictureBox1.TabStop = false;
             pictureBox1.Visible = false;
             // 
+            // MatrixTwoDataDridView
+            // 
+            MatrixTwoDataDridView.AllowUserToAddRows = false;
+            MatrixTwoDataDridView.AllowUserToDeleteRows = false;
+            MatrixTwoDataDridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            MatrixTwoDataDridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            MatrixTwoDataDridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            MatrixTwoDataDridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            MatrixTwoDataDridView.Location = new Point(350, 3);
+            MatrixTwoDataDridView.Name = "MatrixTwoDataDridView";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            MatrixTwoDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            MatrixTwoDataDridView.RowTemplate.Height = 25;
+            MatrixTwoDataDridView.Size = new Size(359, 276);
+            MatrixTwoDataDridView.TabIndex = 5;
+            MatrixTwoDataDridView.Visible = false;
+            MatrixTwoDataDridView.CellValueChanged += MatrixTwoDataDridView_CellValueChanged;
+            // 
+            // MatrixOneDataDridView
+            // 
+            MatrixOneDataDridView.AllowUserToAddRows = false;
+            MatrixOneDataDridView.AllowUserToDeleteRows = false;
+            MatrixOneDataDridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            MatrixOneDataDridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            MatrixOneDataDridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            MatrixOneDataDridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            MatrixOneDataDridView.DefaultCellStyle = dataGridViewCellStyle4;
+            MatrixOneDataDridView.Location = new Point(3, 3);
+            MatrixOneDataDridView.Name = "MatrixOneDataDridView";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            MatrixOneDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            MatrixOneDataDridView.RowTemplate.Height = 25;
+            MatrixOneDataDridView.Size = new Size(341, 276);
+            MatrixOneDataDridView.TabIndex = 1333;
+            MatrixOneDataDridView.CellValueChanged += MatrixOneDataDridView_CellValueChanged;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 48.7359543F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 51.2640457F));
+            tableLayoutPanel1.Controls.Add(MatrixOneDataDridView, 0, 0);
+            tableLayoutPanel1.Controls.Add(MatrixTwoDataDridView, 1, 0);
+            tableLayoutPanel1.Location = new Point(20, 124);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(712, 282);
+            tableLayoutPanel1.TabIndex = 1334;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(744, 544);
+            Controls.Add(tableLayoutPanel1);
             Controls.Add(NumberLabel);
             Controls.Add(NumberTextBox);
             Controls.Add(ActionButton);
@@ -389,18 +407,14 @@
             Controls.Add(matrixTwoGroupBox);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
-            Controls.Add(MatrixTwoDataDridView);
-            Controls.Add(MatrixOneDataDridView);
             Controls.Add(menuStrip1);
             Controls.Add(pictureBox1);
             MainMenuStrip = menuStrip1;
             Name = "FormMain";
             Text = "Взаимодействие с матрицами";
             WindowState = FormWindowState.Maximized;
-            ((System.ComponentModel.ISupportInitialize)MatrixOneDataDridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)MatrixTwoDataDridView).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
@@ -412,18 +426,18 @@
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)MatrixTwoDataDridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)MatrixOneDataDridView).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private DataGridView MatrixOneDataDridView;
         private NumericUpDown numericUpDown1;
         private NumericUpDown numericUpDown2;
         private Label label1;
         private Label label2;
-        private DataGridView MatrixTwoDataDridView;
         private RadioButton radioButton1;
         private GroupBox groupBox1;
         private RadioButton radioButton2;
@@ -443,5 +457,8 @@
         private TextBox NumberTextBox;
         private Label NumberLabel;
         private PictureBox pictureBox1;
+        private DataGridView MatrixTwoDataDridView;
+        private DataGridView MatrixOneDataDridView;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

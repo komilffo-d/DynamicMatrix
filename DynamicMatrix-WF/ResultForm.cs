@@ -48,7 +48,6 @@ namespace DynamicMatrix_WF
             foreach (DataGridViewColumn column in ResultDataGridView.Columns)
 
             {
-                column.Width = 30;
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             foreach (DataGridViewRow row in ResultDataGridView.Rows)
@@ -65,8 +64,7 @@ namespace DynamicMatrix_WF
                 }
 
             }
-            if (matrix is not null)
-                ResultDataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+
             ResultDataGridView.Refresh();
         }
 
