@@ -289,21 +289,27 @@ namespace DynamicMatrix_DLL
             }
 
             Matrix<float> mathNetMatrix1 = Matrix<float>.Build.DenseOfArray(floatMatrix1);
-            Matrix<float> mathNetMatrix2 = Matrix<float>.Build.DenseOfArray(floatMatrix2).Inverse();
+            Matrix<float> mathNetMatrix2 = Matrix<float>.Build.DenseOfArray(floatMatrix2);
 
-
-            float[,] result = mathNetMatrix1.Multiply(mathNetMatrix2).ToArray();
-
-            int[,] resultArray = new int[result.GetLength(0), result.GetLength(1)];
-
-            for (int i = 0; i < result.GetLength(0); i++)
-            {
-                for (int j = 0; j < result.GetLength(1); j++)
-                {
-                    resultArray[i, j] = Convert.ToInt32(result[i, j]);
-                }
+            if (Convert.ToInt32(mathNetMatrix2.Determinant())== 0){
+                return null;
             }
-            return resultArray;
+            else
+            {
+                float[,] result = mathNetMatrix1.Multiply(mathNetMatrix2.Inverse()).ToArray();
+
+                int[,] resultArray = new int[result.GetLength(0), result.GetLength(1)];
+
+                for (int i = 0; i < result.GetLength(0); i++)
+                {
+                    for (int j = 0; j < result.GetLength(1); j++)
+                    {
+                        resultArray[i, j] = Convert.ToInt32(result[i, j]);
+                    }
+                }
+                return resultArray;
+            }
+
         }
 
 

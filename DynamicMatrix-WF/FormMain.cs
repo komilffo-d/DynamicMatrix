@@ -558,7 +558,14 @@ namespace DynamicMatrix_WF
                             break;
                         case ActionEnum.DivisionMatrix:
                             if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixTwo))
+                            {
                                 resultIntMatrix = DynamicMatrix.DivisionMatrixInt(ConvertMatrixToInt(matrixOne), ConvertMatrixToInt(matrixTwo), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1), (nint)matrixTwo.GetLength(0), (nint)matrixTwo.GetLength(1));
+                                if (resultIntMatrix is null)
+                                {
+                                    MessageBox.Show("¬тора€ матрица €вл€етс€ вырожденной");
+                                }
+                            }
+
                             else
                                 MessageBox.Show("ћатрицы не совпадают по размеру перемножаемых измерений.");
                             break;
