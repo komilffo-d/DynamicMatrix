@@ -28,8 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             MatrixOneDataDridView = new DataGridView();
             numericUpDown1 = new NumericUpDown();
             numericUpDown2 = new NumericUpDown();
@@ -54,6 +58,7 @@
             ActionButton = new Button();
             NumberTextBox = new TextBox();
             NumberLabel = new Label();
+            pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)MatrixOneDataDridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
@@ -64,31 +69,40 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown4).BeginInit();
             menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // MatrixOneDataDridView
             // 
             MatrixOneDataDridView.AllowUserToAddRows = false;
             MatrixOneDataDridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            MatrixOneDataDridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = SystemColors.Control;
+            dataGridViewCellStyle11.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
+            MatrixOneDataDridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             MatrixOneDataDridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = SystemColors.Window;
+            dataGridViewCellStyle12.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle12.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle12.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.True;
+            MatrixOneDataDridView.DefaultCellStyle = dataGridViewCellStyle12;
             MatrixOneDataDridView.Location = new Point(10, 130);
             MatrixOneDataDridView.Name = "MatrixOneDataDridView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            MatrixOneDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = SystemColors.Control;
+            dataGridViewCellStyle13.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            dataGridViewCellStyle13.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.True;
+            MatrixOneDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
             MatrixOneDataDridView.RowTemplate.Height = 25;
             MatrixOneDataDridView.Size = new Size(480, 270);
             MatrixOneDataDridView.TabIndex = 0;
@@ -96,6 +110,7 @@
             // 
             // numericUpDown1
             // 
+            numericUpDown1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             numericUpDown1.Location = new Point(108, 26);
             numericUpDown1.Name = "numericUpDown1";
             numericUpDown1.Size = new Size(48, 23);
@@ -104,6 +119,7 @@
             // 
             // numericUpDown2
             // 
+            numericUpDown2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             numericUpDown2.Location = new Point(108, 62);
             numericUpDown2.Name = "numericUpDown2";
             numericUpDown2.Size = new Size(48, 23);
@@ -113,6 +129,7 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label1.Location = new Point(19, 28);
             label1.Name = "label1";
             label1.Size = new Size(47, 15);
@@ -122,6 +139,7 @@
             // label2
             // 
             label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label2.Location = new Point(19, 62);
             label2.Name = "label2";
             label2.Size = new Size(57, 15);
@@ -134,9 +152,25 @@
             MatrixTwoDataDridView.AllowUserToDeleteRows = false;
             MatrixTwoDataDridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             MatrixTwoDataDridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = SystemColors.Control;
+            dataGridViewCellStyle14.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            dataGridViewCellStyle14.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle14.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = DataGridViewTriState.True;
+            MatrixTwoDataDridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
             MatrixTwoDataDridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             MatrixTwoDataDridView.Location = new Point(253, 130);
             MatrixTwoDataDridView.Name = "MatrixTwoDataDridView";
+            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = SystemColors.Control;
+            dataGridViewCellStyle15.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            dataGridViewCellStyle15.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = DataGridViewTriState.True;
+            MatrixTwoDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             MatrixTwoDataDridView.RowTemplate.Height = 25;
             MatrixTwoDataDridView.Size = new Size(480, 270);
             MatrixTwoDataDridView.TabIndex = 5;
@@ -184,12 +218,13 @@
             groupBox2.Controls.Add(numericUpDown1);
             groupBox2.Controls.Add(numericUpDown2);
             groupBox2.Controls.Add(label2);
+            groupBox2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox2.Location = new Point(253, 24);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(200, 88);
             groupBox2.TabIndex = 8;
             groupBox2.TabStop = false;
-            groupBox2.Text = "Матрица #1";
+            groupBox2.Text = "МАТРИЦА №1";
             // 
             // matrixTwoGroupBox
             // 
@@ -197,17 +232,19 @@
             matrixTwoGroupBox.Controls.Add(numericUpDown3);
             matrixTwoGroupBox.Controls.Add(numericUpDown4);
             matrixTwoGroupBox.Controls.Add(label4);
+            matrixTwoGroupBox.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             matrixTwoGroupBox.Location = new Point(480, 27);
             matrixTwoGroupBox.Name = "matrixTwoGroupBox";
             matrixTwoGroupBox.Size = new Size(200, 89);
             matrixTwoGroupBox.TabIndex = 9;
             matrixTwoGroupBox.TabStop = false;
-            matrixTwoGroupBox.Text = "Матрица #2";
+            matrixTwoGroupBox.Text = "МАТРИЦА №2";
             matrixTwoGroupBox.Visible = false;
             // 
             // label3
             // 
             label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label3.Location = new Point(19, 28);
             label3.Name = "label3";
             label3.Size = new Size(47, 15);
@@ -216,6 +253,7 @@
             // 
             // numericUpDown3
             // 
+            numericUpDown3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             numericUpDown3.Location = new Point(108, 26);
             numericUpDown3.Name = "numericUpDown3";
             numericUpDown3.Size = new Size(48, 23);
@@ -224,6 +262,7 @@
             // 
             // numericUpDown4
             // 
+            numericUpDown4.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             numericUpDown4.Location = new Point(108, 62);
             numericUpDown4.Name = "numericUpDown4";
             numericUpDown4.Size = new Size(48, 23);
@@ -233,6 +272,7 @@
             // label4
             // 
             label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             label4.Location = new Point(19, 62);
             label4.Name = "label4";
             label4.Size = new Size(57, 15);
@@ -310,12 +350,26 @@
             // NumberLabel
             // 
             NumberLabel.AutoSize = true;
+            NumberLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point);
             NumberLabel.Location = new Point(20, 409);
             NumberLabel.Name = "NumberLabel";
-            NumberLabel.Size = new Size(90, 15);
+            NumberLabel.Size = new Size(92, 15);
             NumberLabel.TabIndex = 14;
             NumberLabel.Text = "Введите число:";
             NumberLabel.Visible = false;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = Color.White;
+            pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(744, 544);
+            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox1.TabIndex = 15;
+            pictureBox1.TabStop = false;
+            pictureBox1.Visible = false;
             // 
             // FormMain
             // 
@@ -332,6 +386,7 @@
             Controls.Add(MatrixTwoDataDridView);
             Controls.Add(MatrixOneDataDridView);
             Controls.Add(menuStrip1);
+            Controls.Add(pictureBox1);
             MainMenuStrip = menuStrip1;
             Name = "FormMain";
             Text = "Взаимодействие с матрицами";
@@ -349,6 +404,7 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDown4).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -379,5 +435,6 @@
         private ToolStripMenuItem fileTXTToolStripMenuItem;
         private TextBox NumberTextBox;
         private Label NumberLabel;
+        private PictureBox pictureBox1;
     }
 }

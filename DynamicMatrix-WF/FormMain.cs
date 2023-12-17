@@ -101,7 +101,11 @@ namespace DynamicMatrix_WF
                 column.ReadOnly = false;
             }
             foreach (DataGridViewRow row in MatrixOneDataDridView.Rows)
+            {
                 row.HeaderCell.Value = (row.Index + 1).ToString();
+
+            }
+
 
             if (valueMatrix is not null)
             {
@@ -113,6 +117,7 @@ namespace DynamicMatrix_WF
                     }
                 }
             }
+
             MatrixOneDataDridView.Refresh();
             MatrixOneDataDridView.CellValueChanged += MatrixOneDataDridView_CellValueChanged!;
         }
@@ -295,6 +300,7 @@ namespace DynamicMatrix_WF
             RadioButton radioButton = (RadioButton)(sender);
             if (radioButton.Checked)
             {
+                clearAllControls();
                 RedrawComboBox(false);
                 matrixTwoGroupBox.Visible = false;
                 int offsetMatrix = 120;
@@ -311,6 +317,7 @@ namespace DynamicMatrix_WF
             RadioButton radioButton = (RadioButton)(sender);
             if (radioButton.Checked)
             {
+                clearAllControls();
                 RedrawComboBox(true);
                 matrixTwoGroupBox.Visible = true;
                 int offsetMatrix = 120;
@@ -324,6 +331,19 @@ namespace DynamicMatrix_WF
 
         }
 
+        private void clearAllControls()
+        {
+            numericUpDown1.Value = 0;
+            numericUpDown2.Value = 0;
+            numericUpDown3.Value = 0;
+            numericUpDown4.Value = 0;
+            RedrawComboBox();
+
+            NumberLabel.Visible = false;
+            NumberTextBox.Visible = false;
+            NumberTextBox.Enabled = false;
+            NumberTextBox.Clear();
+        }
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
             RedrawMatrixTwo();
@@ -386,6 +406,7 @@ namespace DynamicMatrix_WF
             saveFileDialog1.InitialDirectory = KnownFolders.Downloads.Path;
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
+
                 using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
                 {
                     sw.WriteLine("/*** Матрица #1 ***/\n");
@@ -411,6 +432,8 @@ namespace DynamicMatrix_WF
                     }
 
                 }
+                                MessageBox.Show("Данные успешно выведены в файл TXT.", "Экспорт в TXT", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
         }
         private void fileTXTImportoolStripMenuItem_Click(object sender, EventArgs e)
@@ -421,12 +444,15 @@ namespace DynamicMatrix_WF
             openFileDialog.InitialDirectory = KnownFolders.Downloads.Path;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+
+
                 int linesToSkip = 2;
                 MatrixOneDataDridView.DataSource = null;
                 MatrixOneDataDridView.Rows.Clear();
 
                 List<string> linesOne = new List<string>();
                 List<string> linesTwo = new List<string>();
+
                 using (StreamReader sr = new StreamReader(openFileDialog.FileName))
                 {
                     for (int i = 0; i < linesToSkip; i++)
@@ -465,6 +491,7 @@ namespace DynamicMatrix_WF
 
         private async void ActionButton_Click(object sender, EventArgs e)
         {
+
             using (var dbContext = new AppDbContext())
             {
                 string[,] matrixOne = GetMatrixOne();
@@ -476,9 +503,14 @@ namespace DynamicMatrix_WF
                 int? resultInt = null;
                 float? resultFloat = null;
 
-                if (Enum.IsDefined(typeof(ActionEnum), ((ComboBoxItem)comboBox1.SelectedItem).Value))
+
+                var cbItem = comboBox1.Invoke(new Func<object>(() => comboBox1.SelectedItem));
+
+
+                if (cbItem is not null && Enum.IsDefined(typeof(ActionEnum), ((ComboBoxItem)cbItem).Value))
                 {
-                    switch ((ActionEnum)((ComboBoxItem)comboBox1.SelectedItem).Value)
+
+                    switch ((ActionEnum)((ComboBoxItem)cbItem).Value)
                     {
                         case ActionEnum.SumMatrices when checkMatrixFloat(matrixOne) || checkMatrixFloat(matrixTwo):
                             if (checkMatricesEqualityDestinationLength(matrixOne, matrixTwo))
@@ -563,98 +595,109 @@ namespace DynamicMatrix_WF
 
                             break;
                         case ActionEnum.ReverseMatrix when checkMatrixFloat(matrixOne):
-                            resultFloatMatrix = DynamicMatrix.ReverseMatrixFloat(ConvertMatrixToFloat(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+                            if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne) && DynamicMatrix.DeterminantFloat(ConvertMatrixToFloat(matrixOne), (nint)(matrixOne.GetLength(0) + matrixOne.GetLength(1)) / 2) != 0)
+                                resultFloatMatrix = DynamicMatrix.ReverseMatrixFloat(ConvertMatrixToFloat(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+                            else
+                                MessageBox.Show("Матрица является вырожденной или неквадратной.");
 
                             break;
                         case ActionEnum.ReverseMatrix:
-                            resultIntMatrix = DynamicMatrix.ReverseMatrixInt(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+                            if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne) && DynamicMatrix.DeterminantInt(ConvertMatrixToInt(matrixOne), (nint)(matrixOne.GetLength(0) + matrixOne.GetLength(1)) / 2) != 0)
+                                resultIntMatrix = DynamicMatrix.ReverseMatrixInt(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+                            else
+                                MessageBox.Show("Матрица является вырожденной или неквадратной.");
+
 
                             break;
                         default:
                             break;
                     }
-                }
-                if (resultIntMatrix is not null)
-                {
-                    Models.Action action = new Models.Action() { ActionType = (ActionEnum)((ComboBoxItem)comboBox1.SelectedItem).Value, Result = JsonConvert.SerializeObject(resultIntMatrix), };
-                    await dbContext.Actions.AddAsync(action);
-
-
-
-                    Value entityOne = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
-
-                    await dbContext.Values.AddAsync(entityOne);
-
-
-
-
-                    await dbContext.SaveChangesAsync();
-                    ResultForm resultForm = new ResultForm(ConvertMatrixToString(resultIntMatrix));
-                    resultForm.Show();
-                    return;
-                }
-                if (resultFloatMatrix is not null)
-                {
-                    Models.Action action = new Models.Action() { ActionType = (ActionEnum)((ComboBoxItem)comboBox1.SelectedItem).Value, Result = JsonConvert.SerializeObject(resultFloatMatrix), };
-                    await dbContext.Actions.AddAsync(action);
-
-
-
-                    Value entityOne = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
-
-                    await dbContext.Values.AddAsync(entityOne);
-
-                    if (matrixTwo.Length > 0)
+                    if (resultIntMatrix is not null)
                     {
-                        Value entityTwo = new Value() { Number = JsonConvert.SerializeObject(matrixTwo), Action = action };
+                        Models.Action action = new Models.Action() { ActionType = (ActionEnum)((ComboBoxItem)cbItem).Value, Result = JsonConvert.SerializeObject(resultIntMatrix), };
+                        await dbContext.Actions.AddAsync(action);
 
-                        await dbContext.Values.AddAsync(entityTwo);
+
+
+                        Value entityOne = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
+
+                        await dbContext.Values.AddAsync(entityOne);
+
+
+
+
+                        await dbContext.SaveChangesAsync();
+                        ResultForm resultForm = new ResultForm(ConvertMatrixToString(resultIntMatrix));
+
+                        resultForm.Show();
                     }
+                    if (resultFloatMatrix is not null)
+                    {
+                        Models.Action action = new Models.Action() { ActionType = (ActionEnum)((ComboBoxItem)cbItem).Value, Result = JsonConvert.SerializeObject(resultFloatMatrix), };
+                        await dbContext.Actions.AddAsync(action);
 
 
-                    await dbContext.SaveChangesAsync();
-                    ResultForm resultForm = new ResultForm(ConvertMatrixToString(resultFloatMatrix));
-                    resultForm.Show();
-                    return;
+
+                        Value entityOne = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
+
+                        await dbContext.Values.AddAsync(entityOne);
+
+                        if (matrixTwo.Length > 0)
+                        {
+                            Value entityTwo = new Value() { Number = JsonConvert.SerializeObject(matrixTwo), Action = action };
+
+                            await dbContext.Values.AddAsync(entityTwo);
+                        }
+
+
+                        await dbContext.SaveChangesAsync();
+                        ResultForm resultForm = new ResultForm(ConvertMatrixToString(resultFloatMatrix));
+                        resultForm.Show();
+                    }
+                    if (resultInt is not null)
+                    {
+                        Models.Action action = new Models.Action() { ActionType = (ActionEnum)((ComboBoxItem)cbItem).Value, Result = resultInt.ToString(), };
+                        await dbContext.Actions.AddAsync(action);
+
+
+
+                        Value entity = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
+
+                        await dbContext.Values.AddAsync(entity);
+
+
+
+                        await dbContext.SaveChangesAsync();
+                        ResultForm resultForm = new ResultForm($@"Определитель равен: {resultInt}");
+                        resultForm.Show();
+                    }
+                    if (resultFloat is not null)
+                    {
+                        Models.Action action = new Models.Action() { ActionType = (ActionEnum)((ComboBoxItem)cbItem).Value, Result = resultFloat.ToString(), };
+                        await dbContext.Actions.AddAsync(action);
+
+
+
+                        Value entity = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
+
+                        await dbContext.Values.AddAsync(entity);
+
+
+
+                        await dbContext.SaveChangesAsync();
+                        ResultForm resultForm = new ResultForm($@"Определитель равен: {resultFloat}");
+                        resultForm.Show();
+
+                    }
                 }
-                if (resultInt is not null)
+                else
                 {
-                    Models.Action action = new Models.Action() { ActionType = (ActionEnum)((ComboBoxItem)comboBox1.SelectedItem).Value, Result = resultInt.ToString(), };
-                    await dbContext.Actions.AddAsync(action);
-
-
-
-                    Value entity = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
-
-                    await dbContext.Values.AddAsync(entity);
-
-
-
-                    await dbContext.SaveChangesAsync();
-                    ResultForm resultForm = new ResultForm($@"Определитель равен: {resultInt}");
-                    resultForm.Show();
-                    return;
+                    MessageBox.Show("Не выбран тип действия.");
                 }
-                if (resultFloat is not null)
-                {
-                    Models.Action action = new Models.Action() { ActionType = (ActionEnum)((ComboBoxItem)comboBox1.SelectedItem).Value, Result = resultFloat.ToString(), };
-                    await dbContext.Actions.AddAsync(action);
 
-
-
-                    Value entity = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
-
-                    await dbContext.Values.AddAsync(entity);
-
-
-
-                    await dbContext.SaveChangesAsync();
-                    ResultForm resultForm = new ResultForm($@"Определитель равен: {resultFloat}");
-                    resultForm.Show();
-                    return;
-                }
 
             }
+
 
         }
 
@@ -706,6 +749,27 @@ namespace DynamicMatrix_WF
             }
             MatrixTwoDataDridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             MatrixTwoDataDridView.CellValueChanged += MatrixTwoDataDridView_CellValueChanged!;
+        }
+        protected internal void showLoader()
+        {
+            lock (pictureBox1)
+            {
+                pictureBox1.BringToFront();
+                pictureBox1.Visible = true;
+                pictureBox1.Dock = DockStyle.Fill;
+                menuStrip1.Visible = false;
+            }
+
+        }
+
+        protected internal void closeLoader()
+        {
+            lock (pictureBox1)
+            {
+                pictureBox1.Visible = false;
+                menuStrip1.Visible = true;
+            }
+
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace DynamicMatrix_WF
         public DbSet<Value> Values { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=(localdb)\\MSSQLLocalDB;Database=ActionDb;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["prod"].ConnectionString.ToString());
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

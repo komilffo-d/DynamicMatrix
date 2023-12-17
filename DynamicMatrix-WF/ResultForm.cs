@@ -52,8 +52,8 @@ namespace DynamicMatrix_WF
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             foreach (DataGridViewRow row in ResultDataGridView.Rows)
-
                 row.HeaderCell.Value = (row.Index + 1).ToString();
+
             if (matrix is not null)
             {
                 for (int i = 0; i < matrix.GetLength(0); i++)
@@ -79,7 +79,7 @@ namespace DynamicMatrix_WF
             {
                 using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
                 {
-                    sw.WriteLine("/*** Матрица #1 ***/\n");
+                    sw.WriteLine("/*** Результирующая матрица(Также можно импортировать) ***/\n");
                     foreach (DataGridViewRow row in ResultDataGridView.Rows)
                     {
                         foreach (DataGridViewCell cell in row.Cells)
@@ -90,6 +90,7 @@ namespace DynamicMatrix_WF
                     }
                     
                 }
+                MessageBox.Show("Данные успешно выведены в файл TXT.", "Экспорт в TXT", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -105,7 +106,11 @@ namespace DynamicMatrix_WF
                 Document doc = wordApp.Documents.Add();
 
                 Table table = doc.Tables.Add(doc.Range(), ResultDataGridView.Rows.Count + 1, ResultDataGridView.ColumnCount);
-
+                table.Borders.Enable = 1;
+                table.Range.Font.Size = 12;
+                table.Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
+                table.Range.ParagraphFormat.SpaceAfter = 6;
+                table.Rows[1].Cells.Shading.BackgroundPatternColor = WdColor.wdColorGray25;
                 for (int i = 0; i < ResultDataGridView.Columns.Count; i++)
                 {
                     table.Cell(1, i + 1).Range.Text = ResultDataGridView.Columns[i].HeaderText;

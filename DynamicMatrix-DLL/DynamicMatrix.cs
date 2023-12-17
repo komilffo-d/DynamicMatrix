@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DynamicMatrix_DLL
+﻿namespace DynamicMatrix_DLL
 {
     public static class DynamicMatrix
     {
@@ -44,7 +42,7 @@ namespace DynamicMatrix_DLL
             {
                 for (IntPtr j = 0; j < cols; ++j)
                 {
-                    result[i,j] = matrix1[i,j] + matrix2[i,j];
+                    result[i, j] = matrix1[i, j] + matrix2[i, j];
                 }
             }
 
@@ -63,7 +61,7 @@ namespace DynamicMatrix_DLL
             {
                 for (IntPtr j = 0; j < cols; ++j)
                 {
-                    result[i,j] = matrix1[i,j] + matrix2[i,j];
+                    result[i, j] = matrix1[i, j] + matrix2[i, j];
                 }
             }
 
@@ -88,13 +86,13 @@ namespace DynamicMatrix_DLL
                 return null;
             }
 
-            int[,] result = new int[rows,cols];
+            int[,] result = new int[rows, cols];
 
             for (IntPtr i = 0; i < rows; ++i)
             {
                 for (IntPtr j = 0; j < cols; ++j)
                 {
-                    result[i,j] = matrix1[i,j] - matrix2[i,j];
+                    result[i, j] = matrix1[i, j] - matrix2[i, j];
                 }
             }
 
@@ -111,14 +109,14 @@ namespace DynamicMatrix_DLL
                 return null;
             }
 
-            float[,] result = new float[rows,cols];
+            float[,] result = new float[rows, cols];
 
 
             for (IntPtr i = 0; i < rows; ++i)
             {
                 for (IntPtr j = 0; j < cols; ++j)
                 {
-                    result[i,j] = matrix1[i,j] - matrix2[i,j];
+                    result[i, j] = matrix1[i, j] - matrix2[i, j];
                 }
             }
 
@@ -144,14 +142,14 @@ namespace DynamicMatrix_DLL
                 return null;
             }
 
-            int[,] result = new int[rows1,cols2];
+            int[,] result = new int[rows1, cols2];
 
 
             for (IntPtr i = 0; i < rows1; ++i)
             {
                 for (IntPtr j = 0; j < cols2; ++j)
                 {
-                    result[i,j] = 0;
+                    result[i, j] = 0;
                 }
             }
 
@@ -161,7 +159,7 @@ namespace DynamicMatrix_DLL
                 {
                     for (IntPtr k = 0; k < cols1; ++k)
                     {
-                        result[i,j] += matrix1[i,k] * matrix2[k,j];
+                        result[i, j] += matrix1[i, k] * matrix2[k, j];
                     }
                 }
             }
@@ -180,13 +178,13 @@ namespace DynamicMatrix_DLL
                 return null;
             }
 
-            float[,] result = new float[rows1,cols2];
+            float[,] result = new float[rows1, cols2];
             for (IntPtr i = 0; i < rows1; ++i)
             {
 
                 for (IntPtr j = 0; j < cols2; ++j)
                 {
-                    result[i,j] = 0.0f;
+                    result[i, j] = 0.0f;
                 }
             }
 
@@ -196,7 +194,7 @@ namespace DynamicMatrix_DLL
                 {
                     for (IntPtr k = 0; k < cols1; ++k)
                     {
-                        result[i,j] += matrix1[i,k] * matrix2[k,j];
+                        result[i, j] += matrix1[i, k] * matrix2[k, j];
                     }
                 }
             }
@@ -219,14 +217,14 @@ namespace DynamicMatrix_DLL
         public static int[,] MultiplicationOnNumberInt(int[,] matrix, IntPtr rows, IntPtr cols, int number)
         {
 
-            int[,] result = new int[rows,cols];
+            int[,] result = new int[rows, cols];
 
 
             for (IntPtr i = 0; i < rows; ++i)
             {
                 for (IntPtr j = 0; j < cols; ++j)
                 {
-                    result[i,j] = matrix[i,j] * number;
+                    result[i, j] = matrix[i, j] * number;
                 }
             }
 
@@ -238,7 +236,7 @@ namespace DynamicMatrix_DLL
         public static float[,] MultiplicationOnNumberFloat(float[,] matrix, IntPtr rows, IntPtr cols, float number)
         {
 
-            float[,] result = new float[rows,cols];
+            float[,] result = new float[rows, cols];
 
 
 
@@ -246,7 +244,7 @@ namespace DynamicMatrix_DLL
             {
                 for (IntPtr j = 0; j < cols; ++j)
                 {
-                    result[i,j] = matrix[i,j] * number;
+                    result[i, j] = matrix[i, j] * number;
                 }
             }
 
@@ -275,7 +273,7 @@ namespace DynamicMatrix_DLL
 
             int[,] matrix_in = TranspositionInt(matrix2, rows2, cols2);
 
-            int[,] result = new int[rows1,cols2];
+            int[,] result = new int[rows1, cols2];
 
 
             for (IntPtr i = 0; i < rows1; ++i)
@@ -284,7 +282,7 @@ namespace DynamicMatrix_DLL
                 {
                     for (IntPtr k = 0; k < cols1; ++k)
                     {
-                        result[i,j] += matrix1[i,k] * matrix_in[k,j];
+                        result[i, j] += matrix1[i, k] * matrix_in[j, k];
                     }
                 }
             }
@@ -306,7 +304,7 @@ namespace DynamicMatrix_DLL
 
             float[,] matrix_in = TranspositionFloat(matrix2, rows2, cols2);
 
-            float[,] result = new float[rows1,cols2];
+            float[,] result = new float[rows1, cols2];
 
 
             for (IntPtr i = 0; i < rows1; ++i)
@@ -315,7 +313,7 @@ namespace DynamicMatrix_DLL
                 {
                     for (IntPtr k = 0; k < cols1; ++k)
                     {
-                        result[i,j] += matrix1[i,k] * matrix_in[k,j];
+                        result[i, j] += matrix1[i, k] * matrix_in[j, k];
                     }
                 }
             }
@@ -346,7 +344,7 @@ namespace DynamicMatrix_DLL
                 mat[i] = new int[size];
                 for (IntPtr j = 0; j < size; ++j)
                 {
-                    mat[i][j] = matrix[i,j];
+                    mat[i][j] = matrix[i, j];
                 }
             }
 
@@ -393,7 +391,7 @@ namespace DynamicMatrix_DLL
                 mat[i] = new float[size];
                 for (IntPtr j = 0; j < size; ++j)
                 {
-                    mat[i][j] = matrix[i,j];
+                    mat[i][j] = matrix[i, j];
                 }
             }
 
@@ -410,7 +408,7 @@ namespace DynamicMatrix_DLL
                 }
                 if (maxRow != i)
                 {
-                    (mat[i], mat[maxRow]) = (mat[maxRow],mat[i]);
+                    (mat[i], mat[maxRow]) = (mat[maxRow], mat[i]);
 
                     det = -det;
                 }
@@ -449,7 +447,7 @@ namespace DynamicMatrix_DLL
         public static int[,] TranspositionInt(int[,] matrix, IntPtr rows, IntPtr cols)
         {
 
-            int[,] result = new int[cols,rows];
+            int[,] result = new int[cols, rows];
 
 
 
@@ -457,7 +455,7 @@ namespace DynamicMatrix_DLL
             {
                 for (IntPtr j = 0; j < cols; ++j)
                 {
-                    result[j,i] = matrix[i,j];
+                    result[j, i] = matrix[i, j];
                 }
             }
 
@@ -476,7 +474,7 @@ namespace DynamicMatrix_DLL
             {
                 for (IntPtr j = 0; j < cols; ++j)
                 {
-                    result[j,i] = matrix[i,j];
+                    result[j, i] = matrix[i, j];
                 }
             }
 
@@ -496,100 +494,109 @@ namespace DynamicMatrix_DLL
         /*    Операция нахождения обратной матрицы
               Если матрица вырожденная или неквадратная, то она не имеет обратной матрицы
               Обратная матрица существует, если определитель не равен нулю    */
-        public static int[][] ReverseMatrixInt(int[][] matrix, IntPtr rows, IntPtr cols)
+        public static int[,] ReverseMatrixInt(int[,] matrix, IntPtr rows, IntPtr cols)
         {
 
-            int[][] augmentedMatrix = new int[rows][];
-            for (IntPtr i = 0; i < rows; ++i)
+            int[,] augmentedMatrix = new int[rows, 2 * cols];
+
+            for (int i = 0; i < rows; i++)
             {
-                augmentedMatrix[i] = new int[2 * cols];
-                Array.Fill(augmentedMatrix[i], 0);
-                augmentedMatrix[i][i + cols] = 1;
-                Array.Copy(matrix[i], augmentedMatrix[i], matrix[i].Length + cols);
+                for (int j = 0; j < cols; j++)
+                {
+                    augmentedMatrix[i, j] = matrix[i, j];
+                    augmentedMatrix[i, j + cols] = (i == j) ? 1 : 0;
+                }
             }
 
 
-            for (IntPtr i = 0; i < rows; ++i)
+            for (int i = 0; i < rows; i++)
             {
-                int pivot = augmentedMatrix[i][i];
-                for (IntPtr j = 0; j < 2 * cols; ++j)
+                int scalar = augmentedMatrix[i, i];
+
+                for (int j = 0; j < 2 * cols; j++)
                 {
-                    augmentedMatrix[i][j] /= pivot;
+                    augmentedMatrix[i, j] /= scalar==0 ? 1 : scalar;
                 }
-                for (IntPtr k = 0; k < rows; ++k)
+
+                for (int k = 0; k < rows; k++)
                 {
                     if (k != i)
                     {
-                        int factor = augmentedMatrix[k][i];
-                        for (IntPtr j = 0; j < 2 * cols; ++j)
+                        int factor = augmentedMatrix[k, i];
+
+                        for (int j = 0; j < 2 * cols; j++)
                         {
-                            augmentedMatrix[k][j] -= factor * augmentedMatrix[i][j];
+                            augmentedMatrix[k, j] -= factor * augmentedMatrix[i, j];
                         }
                     }
                 }
             }
 
-
-            int[][] reverseMatrix = new int[rows][];
-            for (IntPtr i = 0; i < rows; ++i)
+            int[,] resultMatrix = new int[rows, cols];  
+            for (int i = 0; i < rows; i++)
             {
-                reverseMatrix[i] = new int[cols];
-                Array.Copy(augmentedMatrix[i], reverseMatrix[i], augmentedMatrix[i].Length + 2* cols);
+                for (int j = 0; j < cols; j++)
+                {
+                    resultMatrix[i, j] = augmentedMatrix[i, j + cols];
+                }
             }
 
-
-            return reverseMatrix;
+            return resultMatrix;
         }
 
 
 
-        public static float[][] ReverseMatrixFloat(float[][] matrix, IntPtr rows, IntPtr cols)
+        public static float[,] ReverseMatrixFloat(float[,] matrix, IntPtr rows, IntPtr cols)
         {
 
-            float[][] augmentedMatrix = new float[rows][];
-            for (IntPtr i = 0; i < rows; ++i)
+            float[,] augmentedMatrix = new float[rows, 2 * cols];
+
+
+            for (int i = 0; i < rows; i++)
             {
-                augmentedMatrix[i] = new float[2 * cols];
-                Array.Fill(augmentedMatrix[i], 0);
-                augmentedMatrix[i][i + cols] = 1;
-                Array.Copy(matrix[i], augmentedMatrix[i], matrix[i].Length + cols);
-
-
+                for (int j = 0; j < cols; j++)
+                {
+                    augmentedMatrix[i, j] = matrix[i, j];
+                    augmentedMatrix[i, j + cols] = (i == j) ? 1 : 0;
+                }
             }
 
 
-            for (IntPtr i = 0; i < rows; ++i)
+            for (int i = 0; i < rows; i++)
             {
-                float pivot = augmentedMatrix[i][i];
-                for (IntPtr j = 0; j < 2 * cols; ++j)
+                float scalar = augmentedMatrix[i, i];
+
+                for (int j = 0; j < 2 * cols; j++)
                 {
-                    augmentedMatrix[i][j] /= pivot;
+                    augmentedMatrix[i, j] /= scalar ==0.0f ? 1 : scalar;
                 }
-                for (IntPtr k = 0; k < rows; ++k)
+
+                for (int k = 0; k < rows; k++)
                 {
                     if (k != i)
                     {
-                        float factor = augmentedMatrix[k][i];
-                        for (IntPtr j = 0; j < 2 * cols; ++j)
+                        float factor = augmentedMatrix[k, i];
+
+                        for (int j = 0; j < 2 * cols; j++)
                         {
-                            augmentedMatrix[k][j] -= factor * augmentedMatrix[i][j];
+                            augmentedMatrix[k, j] -= factor * augmentedMatrix[i, j];
                         }
                     }
                 }
             }
 
+            float[,] resultMatrix = new float[rows, cols];
 
-            float[][] reverseMatrix = new float[rows][];
-            for (IntPtr i = 0; i < rows; ++i)
+
+            for (int i = 0; i < rows; i++)
             {
-                reverseMatrix[i] = new float[cols];
-                Array.Copy(augmentedMatrix[i], reverseMatrix[i], augmentedMatrix[i].Length + 2 * cols);
-
+                for (int j = 0; j < cols; j++)
+                {
+                    resultMatrix[i, j] = augmentedMatrix[i, j + cols];
+                }
             }
 
-
-
-            return reverseMatrix;
+            return resultMatrix;
         }
 
 
