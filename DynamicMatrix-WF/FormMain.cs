@@ -303,10 +303,10 @@ namespace DynamicMatrix_WF
                 clearAllControls();
                 RedrawComboBox(false);
                 matrixTwoGroupBox.Visible = false;
-                int offsetMatrix = 120;
-                MatrixOneDataDridView.Width = MatrixTwoDataDridView.Width + offsetMatrix;
-                MatrixTwoDataDridView.Width = MatrixTwoDataDridView.Width + offsetMatrix;
-                MatrixTwoDataDridView.Location = new Point(MatrixTwoDataDridView.Location.X - offsetMatrix, 130);
+                /*                int offsetMatrix = 120;
+                                MatrixOneDataDridView.Width = MatrixTwoDataDridView.Width + offsetMatrix;
+                                MatrixTwoDataDridView.Width = MatrixTwoDataDridView.Width + offsetMatrix;
+                                MatrixTwoDataDridView.Location = new Point(MatrixTwoDataDridView.Location.X - offsetMatrix, 130);*/
                 MatrixTwoDataDridView.Visible = false;
             }
 
@@ -320,11 +320,11 @@ namespace DynamicMatrix_WF
                 clearAllControls();
                 RedrawComboBox(true);
                 matrixTwoGroupBox.Visible = true;
-                int offsetMatrix = 120;
+                /*                int offsetMatrix = 120;
 
-                MatrixOneDataDridView.Width = MatrixTwoDataDridView.Width - offsetMatrix;
-                MatrixTwoDataDridView.Width = MatrixTwoDataDridView.Width - offsetMatrix;
-                MatrixTwoDataDridView.Location = new Point(MatrixTwoDataDridView.Location.X + offsetMatrix, 130);
+                                MatrixOneDataDridView.Width = MatrixTwoDataDridView.Width - offsetMatrix;
+                                MatrixTwoDataDridView.Width = MatrixTwoDataDridView.Width - offsetMatrix;
+                                MatrixTwoDataDridView.Location = new Point(MatrixTwoDataDridView.Location.X + offsetMatrix, 130);*/
                 MatrixTwoDataDridView.Visible = true;
             }
 
@@ -432,7 +432,7 @@ namespace DynamicMatrix_WF
                     }
 
                 }
-                                MessageBox.Show("Данные успешно выведены в файл TXT.", "Экспорт в TXT", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Данные успешно выведены в файл TXT.", "Экспорт в TXT", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
         }
