@@ -267,7 +267,7 @@ namespace DynamicMatrix_DLL
 
         /*    Операция деления матриц
               Умножение первого сомножителя на обратную матрицу второго сомножителя    */
-        public static int[,] DivisionMatrixInt(int[,] matrix1, int[,] matrix2, IntPtr rows1, IntPtr cols1, IntPtr rows2, IntPtr cols2)
+        public static float[,] DivisionMatrixInt(int[,] matrix1, int[,] matrix2, IntPtr rows1, IntPtr cols1, IntPtr rows2, IntPtr cols2)
         {
             float[,] floatMatrix1 = new float[rows1, cols1];
 
@@ -298,16 +298,7 @@ namespace DynamicMatrix_DLL
             {
                 float[,] result = mathNetMatrix1.Multiply(mathNetMatrix2.Inverse()).ToArray();
 
-                int[,] resultArray = new int[result.GetLength(0), result.GetLength(1)];
-
-                for (int i = 0; i < result.GetLength(0); i++)
-                {
-                    for (int j = 0; j < result.GetLength(1); j++)
-                    {
-                        resultArray[i, j] = Convert.ToInt32(result[i, j]);
-                    }
-                }
-                return resultArray;
+                return result;
             }
 
         }
@@ -318,10 +309,13 @@ namespace DynamicMatrix_DLL
         public static float[,] DivisionMatrixFloat(float[,] matrix1, float[,] matrix2, IntPtr rows1, IntPtr cols1, IntPtr rows2, IntPtr cols2)
         {   
             Matrix<float> mathNetMatrix1 = Matrix<float>.Build.DenseOfArray(matrix1);
-            Matrix<float> mathNetMatrix2 = Matrix<float>.Build.DenseOfArray(matrix2).Inverse();
+            Matrix<float> mathNetMatrix2 = Matrix<float>.Build.DenseOfArray(matrix2);
 
-            
-            Matrix<float> result=mathNetMatrix1.Multiply(mathNetMatrix2);
+            if (Convert.ToInt32(mathNetMatrix2.Determinant()) == 0)
+            {
+                return null;
+            }
+            Matrix<float> result=mathNetMatrix1.Multiply(mathNetMatrix2.Inverse());
             return result!.ToArray();
 
 
