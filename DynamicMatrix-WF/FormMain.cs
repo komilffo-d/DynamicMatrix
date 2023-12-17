@@ -611,12 +611,17 @@ namespace DynamicMatrix_WF
                         Value entityOne = new Value() { Number = JsonConvert.SerializeObject(matrixOne), Action = action };
 
                         await dbContext.Values.AddAsync(entityOne);
+                        if (matrixTwo.Length > 0)
+                        {
+                            Value entityTwo = new Value() { Number = JsonConvert.SerializeObject(matrixTwo), Action = action };
 
+                            await dbContext.Values.AddAsync(entityTwo);
+                        }
 
 
 
                         await dbContext.SaveChangesAsync();
-                        ResultForm resultForm = new ResultForm(ConvertMatrixToString(resultIntMatrix));
+                        ResultForm resultForm = new ResultForm(ConvertMatrixToString(resultIntMatrix), matrixOne, matrixTwo);
 
                         resultForm.Show();
                     }
@@ -640,7 +645,7 @@ namespace DynamicMatrix_WF
 
 
                         await dbContext.SaveChangesAsync();
-                        ResultForm resultForm = new ResultForm(ConvertMatrixToString(resultFloatMatrix));
+                        ResultForm resultForm = new ResultForm(ConvertMatrixToString(resultFloatMatrix), matrixOne, matrixTwo);
                         resultForm.Show();
                     }
                     if (resultInt is not null)
