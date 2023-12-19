@@ -579,34 +579,34 @@ namespace DynamicMatrix_WF
 
                         case ActionEnum.DeterminantMatrix when checkMatrixFloat(matrixOne):
                             if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne))
-                                resultFloat = DynamicMatrix.DeterminantFloat(ConvertMatrixToFloat(matrixOne), (nint)(matrixOne.GetLength(0) + matrixOne.GetLength(1)) / 2);
+                                resultFloat = DynamicMatrix.DeterminantFloat(ConvertMatrixToFloat(matrixOne));
                             else
                                 MessageBox.Show("ћатрица не €вл€етс€ квадратной");
                             break;
                         case ActionEnum.DeterminantMatrix:
                             if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne))
-                                resultInt = DynamicMatrix.DeterminantInt(ConvertMatrixToInt(matrixOne), (nint)(matrixOne.GetLength(0) + matrixOne.GetLength(1)) / 2);
+                                resultInt = DynamicMatrix.DeterminantInt(ConvertMatrixToInt(matrixOne));
                             else
                                 MessageBox.Show("ћатрица не €вл€етс€ квадратной.");
                             break;
                         case ActionEnum.TranspositionMatrix when checkMatrixFloat(matrixOne):
-                            resultFloatMatrix = DynamicMatrix.TranspositionFloat(ConvertMatrixToFloat(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+                            resultFloatMatrix = DynamicMatrix.Transposition<float>(ConvertMatrixToFloat(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
 
                             break;
                         case ActionEnum.TranspositionMatrix:
-                            resultIntMatrix = DynamicMatrix.TranspositionInt(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+                            resultIntMatrix = DynamicMatrix.Transposition<int>(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
 
                             break;
                         case ActionEnum.ReverseMatrix when checkMatrixFloat(matrixOne):
-                            if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne) && DynamicMatrix.DeterminantFloat(ConvertMatrixToFloat(matrixOne), (nint)(matrixOne.GetLength(0) + matrixOne.GetLength(1)) / 2) != 0)
-                                resultFloatMatrix = DynamicMatrix.ReverseMatrixFloat(ConvertMatrixToFloat(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+                            if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne) && DynamicMatrix.DeterminantFloat(ConvertMatrixToFloat(matrixOne)) != 0)
+                                resultFloatMatrix = DynamicMatrix.ReverseMatrix<float>(ConvertMatrixToFloat(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
                             else
                                 MessageBox.Show("ћатрица €вл€етс€ вырожденной или неквадратной.");
 
                             break;
                         case ActionEnum.ReverseMatrix:
-                            if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne) && DynamicMatrix.DeterminantInt(ConvertMatrixToInt(matrixOne), (nint)(matrixOne.GetLength(0) + matrixOne.GetLength(1)) / 2) != 0)
-                                resultFloatMatrix = DynamicMatrix.ReverseMatrixInt(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+                            if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne) && DynamicMatrix.DeterminantInt(ConvertMatrixToInt(matrixOne)) != 0)
+                                resultFloatMatrix = DynamicMatrix.ReverseMatrix<int>(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
                             else
                                 MessageBox.Show("ћатрица €вл€етс€ вырожденной или неквадратной.");
 
