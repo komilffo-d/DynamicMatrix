@@ -60,6 +60,7 @@
             MatrixTwoDataDridView = new DataGridView();
             MatrixOneDataDridView = new DataGridView();
             tableLayoutPanel1 = new TableLayoutPanel();
+            generateButton = new Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
             groupBox1.SuspendLayout();
@@ -221,7 +222,7 @@
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
             comboBox1.Items.AddRange(new object[] { "Суммирование матриц", "Вычитание матриц", "Перемножение матриц", "Умножение матрицы на число", "Деление матриц", "Нахождение определителя", "Транспонирование матрицы", "Нахождение обратной матрицы" });
-            comboBox1.Location = new Point(20, 435);
+            comboBox1.Location = new Point(20, 455);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(713, 24);
             comboBox1.TabIndex = 10;
@@ -268,7 +269,7 @@
             // ActionButton
             // 
             ActionButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            ActionButton.Location = new Point(20, 490);
+            ActionButton.Location = new Point(19, 502);
             ActionButton.Name = "ActionButton";
             ActionButton.Size = new Size(713, 23);
             ActionButton.TabIndex = 12;
@@ -279,7 +280,7 @@
             // NumberTextBox
             // 
             NumberTextBox.Anchor = AnchorStyles.Bottom;
-            NumberTextBox.Location = new Point(120, 406);
+            NumberTextBox.Location = new Point(120, 426);
             NumberTextBox.Name = "NumberTextBox";
             NumberTextBox.Size = new Size(100, 23);
             NumberTextBox.TabIndex = 13;
@@ -290,7 +291,7 @@
             NumberLabel.Anchor = AnchorStyles.Bottom;
             NumberLabel.AutoSize = true;
             NumberLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point);
-            NumberLabel.Location = new Point(20, 409);
+            NumberLabel.Location = new Point(20, 429);
             NumberLabel.Name = "NumberLabel";
             NumberLabel.Size = new Size(92, 15);
             NumberLabel.TabIndex = 14;
@@ -304,7 +305,7 @@
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(744, 544);
+            pictureBox1.Size = new Size(744, 564);
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 15;
             pictureBox1.TabStop = false;
@@ -336,7 +337,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             MatrixTwoDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             MatrixTwoDataDridView.RowTemplate.Height = 25;
-            MatrixTwoDataDridView.Size = new Size(359, 276);
+            MatrixTwoDataDridView.Size = new Size(359, 296);
             MatrixTwoDataDridView.TabIndex = 5;
             MatrixTwoDataDridView.Visible = false;
             MatrixTwoDataDridView.CellValueChanged += MatrixTwoDataDridView_CellValueChanged;
@@ -375,7 +376,7 @@
             dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
             MatrixOneDataDridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             MatrixOneDataDridView.RowTemplate.Height = 25;
-            MatrixOneDataDridView.Size = new Size(341, 276);
+            MatrixOneDataDridView.Size = new Size(341, 296);
             MatrixOneDataDridView.TabIndex = 1333;
             MatrixOneDataDridView.CellValueChanged += MatrixOneDataDridView_CellValueChanged;
             // 
@@ -391,14 +392,26 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(712, 282);
+            tableLayoutPanel1.Size = new Size(712, 302);
             tableLayoutPanel1.TabIndex = 1334;
+            // 
+            // generateButton
+            // 
+            generateButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            generateButton.Location = new Point(20, 531);
+            generateButton.Name = "generateButton";
+            generateButton.Size = new Size(176, 23);
+            generateButton.TabIndex = 1335;
+            generateButton.Text = "Генерация";
+            generateButton.UseVisualStyleBackColor = true;
+            generateButton.Click += generateButton_Click;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(744, 544);
+            ClientSize = new Size(744, 564);
+            Controls.Add(generateButton);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(NumberLabel);
             Controls.Add(NumberTextBox);
@@ -460,5 +473,6 @@
         private DataGridView MatrixTwoDataDridView;
         private DataGridView MatrixOneDataDridView;
         private TableLayoutPanel tableLayoutPanel1;
+        private Button generateButton;
     }
 }

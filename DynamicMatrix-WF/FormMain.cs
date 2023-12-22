@@ -3,6 +3,7 @@ using DynamicMatrix_WF.Models;
 using Newtonsoft.Json;
 using Syroot.Windows.IO;
 using System.Data;
+using System.Windows.Forms;
 using DataTable = System.Data.DataTable;
 using Point = System.Drawing.Point;
 namespace DynamicMatrix_WF
@@ -71,7 +72,7 @@ namespace DynamicMatrix_WF
         private void RedrawMatrixOne(string[][]? valueMatrix = null)
         {
             MatrixOneDataDridView.CellValueChanged -= MatrixOneDataDridView_CellValueChanged!;
-            if (valueMatrix is not null)
+            if (valueMatrix is not null && valueMatrix.Length > 0)
             {
                 numericUpDown1.Value = valueMatrix.GetLength(0);
                 numericUpDown2.Value = valueMatrix.Select(subArr => subArr.Count()).Sum() / valueMatrix.GetLength(0);
@@ -122,7 +123,7 @@ namespace DynamicMatrix_WF
         private void RedrawMatrixTwo(string[][]? valueMatrix = null)
         {
 
-            if (valueMatrix is not null)
+            if (valueMatrix is not null && valueMatrix.Length > 0)
             {
                 numericUpDown3.Value = valueMatrix.GetLength(0);
                 numericUpDown4.Value = valueMatrix.Select(subArr => subArr.Count()).Sum() / valueMatrix.GetLength(0);
@@ -304,22 +305,27 @@ namespace DynamicMatrix_WF
                 MatrixTwoDataDridView.Visible = false;
             }
 
+
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             RadioButton radioButton = (RadioButton)(sender);
             if (radioButton.Checked)
-            {
-                clearAllControls();
+            {   
                 RedrawComboBox(true);
+                matrixTwoGroupBox.Visible = true;
+                MatrixTwoDataDridView.Visible = true;
+            }
+            else
+            {
+                RedrawComboBox(false);
                 matrixTwoGroupBox.Visible = true;
                 MatrixTwoDataDridView.Visible = true;
             }
 
 
         }
-
         private void clearAllControls()
         {
             numericUpDown1.Value = 0;
@@ -540,13 +546,23 @@ namespace DynamicMatrix_WF
                         case ActionEnum.MultiplicationMatrixOnNumber when checkMatrixFloat(matrixOne):
 
                             if (float.TryParse(NumberTextBox.Text, out float numberFloat))
+                            {
                                 resultFloatMatrix = DynamicMatrix.MultiplicationOnNumberFloat(ConvertMatrixToFloat(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1), numberFloat);
+                                radioButton2_CheckedChanged(radioButton2, null!);
+                                RedrawMatrixTwo(ConvertFloatArrayToStringArray(resultFloatMatrix));
+                            }
+                               
                             else
                                 MessageBox.Show("„исло не задано или имеет не верный формат!");
                             break;
                         case ActionEnum.MultiplicationMatrixOnNumber:
                             if (int.TryParse(NumberTextBox.Text, out int numberInt))
+                            {
                                 resultIntMatrix = DynamicMatrix.MultiplicationOnNumberInt(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1), numberInt);
+                                radioButton2_CheckedChanged(radioButton2, null!);
+                                RedrawMatrixTwo(ConvertIntArrayToStringArray(resultIntMatrix));
+                            }
+                               
                             else
                                 MessageBox.Show("„исло не задано или имеет не верный формат!");
                             break;
@@ -559,7 +575,7 @@ namespace DynamicMatrix_WF
                                     MessageBox.Show("¬тора€ матрица €вл€етс€ вырожденной");
                                 }
                             }
-                                
+
                             else
                                 MessageBox.Show("ћатрицы не совпадают по размеру перемножаемых измерений.");
                             break;
@@ -591,22 +607,33 @@ namespace DynamicMatrix_WF
                             break;
                         case ActionEnum.TranspositionMatrix when checkMatrixFloat(matrixOne):
                             resultFloatMatrix = DynamicMatrix.Transposition<float>(ConvertMatrixToFloat(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
-
+                            radioButton2_CheckedChanged(radioButton2, null!);
+                            RedrawMatrixTwo(ConvertFloatArrayToStringArray(resultFloatMatrix));
                             break;
                         case ActionEnum.TranspositionMatrix:
                             resultIntMatrix = DynamicMatrix.Transposition<int>(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
-
+                            radioButton2_CheckedChanged(radioButton2, null!);
+                            RedrawMatrixTwo(ConvertIntArrayToStringArray(resultIntMatrix));
                             break;
                         case ActionEnum.ReverseMatrix when checkMatrixFloat(matrixOne):
                             if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne) && DynamicMatrix.DeterminantFloat(ConvertMatrixToFloat(matrixOne)) != 0)
+                            {
                                 resultFloatMatrix = DynamicMatrix.ReverseMatrix<float>(ConvertMatrixToFloat(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+                                radioButton2_CheckedChanged(radioButton2, null!);
+                                RedrawMatrixTwo(ConvertFloatArrayToStringArray(resultFloatMatrix));
+                            }
+
                             else
                                 MessageBox.Show("ћатрица €вл€етс€ вырожденной или неквадратной.");
 
                             break;
                         case ActionEnum.ReverseMatrix:
                             if (checkMatricesEqualityMirrorDestinationLength(matrixOne, matrixOne) && DynamicMatrix.DeterminantInt(ConvertMatrixToInt(matrixOne)) != 0)
+                            {
                                 resultFloatMatrix = DynamicMatrix.ReverseMatrix<int>(ConvertMatrixToInt(matrixOne), (nint)matrixOne.GetLength(0), (nint)matrixOne.GetLength(1));
+                                radioButton2_CheckedChanged(radioButton2, null!);
+                                RedrawMatrixTwo(ConvertFloatArrayToStringArray(resultFloatMatrix));
+                            }
                             else
                                 MessageBox.Show("ћатрица €вл€етс€ вырожденной или неквадратной.");
 
@@ -775,6 +802,100 @@ namespace DynamicMatrix_WF
             {
                 pictureBox1.Visible = false;
                 menuStrip1.Visible = true;
+            }
+
+        }
+        private string[][] FillDataGridViewWithRandomNumbers(int rowCount, int columnCount)
+        {
+
+            Random random = new Random();
+
+
+
+            int[,] randomNumbers = new int[rowCount, columnCount];
+
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    randomNumbers[i, j] = random.Next(1, 100); 
+                }
+            }
+
+            return ConvertIntArrayToStringArray(randomNumbers);
+        }
+
+        private static string[][] ConvertIntArrayToStringArray(int[,] intArray)
+        {
+            int rowCount = intArray.GetLength(0);
+            int colCount = intArray.GetLength(1);
+
+            string[][] stringArray = new string[rowCount][];
+
+            for (int i = 0; i < rowCount; i++)
+            {
+                stringArray[i] = new string[colCount];
+
+                for (int j = 0; j < colCount; j++)
+                {
+                    stringArray[i][j] = intArray[i, j].ToString();
+                }
+            }
+
+            return stringArray;
+        }
+        private static string[][] ConvertFloatArrayToStringArray(float[,] intArray)
+        {
+            int rowCount = intArray.GetLength(0);
+            int colCount = intArray.GetLength(1);
+
+            string[][] stringArray = new string[rowCount][];
+
+            for (int i = 0; i < rowCount; i++)
+            {
+                stringArray[i] = new string[colCount];
+
+                for (int j = 0; j < colCount; j++)
+                {
+                    stringArray[i][j] = intArray[i, j].ToString();
+                }
+            }
+
+            return stringArray;
+        }
+        private void generateButton_Click(object sender, EventArgs e)
+        {
+            using (ChoiceModeGeneration form = new ChoiceModeGeneration())
+            {
+                DialogResult result = form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    ModeRandom typeMode = form.modeRandom;
+                    switch (typeMode)
+                    {
+                        case ModeRandom.LEFT:
+                            RedrawMatrixOne(FillDataGridViewWithRandomNumbers(MatrixOneDataDridView.RowCount, MatrixOneDataDridView.ColumnCount));
+                            break;
+                        case ModeRandom.RIGHT :
+                            if (!radioButton2.Checked)
+                            {
+                                MessageBox.Show("Ќужен режим 2-ух матриц.");
+                                break;
+                            }
+                            RedrawMatrixTwo(FillDataGridViewWithRandomNumbers(MatrixTwoDataDridView.RowCount, MatrixTwoDataDridView.ColumnCount));
+                            break;
+                        case ModeRandom.BOTH:
+                            if (!radioButton2.Checked)
+                            {
+                                MessageBox.Show("Ќужен режим 2-ух матриц.");
+                                break;
+                            }
+                            RedrawMatrixOne(FillDataGridViewWithRandomNumbers(MatrixOneDataDridView.RowCount, MatrixOneDataDridView.ColumnCount));
+                            RedrawMatrixTwo(FillDataGridViewWithRandomNumbers(MatrixTwoDataDridView.RowCount, MatrixTwoDataDridView.ColumnCount));
+                            break;
+                    }
+
+                }
             }
 
         }
